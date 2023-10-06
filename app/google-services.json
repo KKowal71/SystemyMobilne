@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "149978812041",
+    "project_id": "olinestore-75529",
+    "storage_bucket": "olinestore-75529.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:149978812041:android:1fdec6ebea5fd06e114058",
+        "android_client_info": {
+          "package_name": "com.example.olinestore"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPwpDZZVdmCqgLIWzXpA6_r7VPe5wFxPE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.LoginFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+        <EditText
+            android:id="@+id/usernameField"
+            android:layout_width="200dp"
+            android:layout_height="48dp"
+            android:hint="enter username or email" />
+
+        <EditText
+            android:id="@+id/passwordField"
+            android:layout_width="200dp"
+            android:layout_height="48dp"
+            android:hint="enter password" />
+
+        <Button
+            android:layout_width="300px"
+            android:layout_height="100px"
+            android:width="300dp"
+            android:id="@+id/loginButton"
+            android:background="@drawable/mybutton"
+            android:text="Login" />
+
+
+        <Button
+            android:layout_width="600px"
+            android:width="600px"
+            android:layout_height="100px"
+            android:layout_marginTop="15px"
+            android:id="@+id/forgotPasswordButton"
+            android:background="@drawable/mybutton"
+            android:text="Forgot password" />
+        <Button
+            android:layout_width="600px"
+            android:width="600px"
+            android:layout_height="100px"
+            android:layout_marginTop="15px"
+            android:id="@+id/continueAsGuestButton"
+            android:background="@drawable/mybutton"
+            android:text="Continue as guest" />
+
+
+    </LinearLayout>
+</FrameLayout>
