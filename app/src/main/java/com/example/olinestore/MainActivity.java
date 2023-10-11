@@ -3,6 +3,7 @@ package com.example.olinestore;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,26 +28,24 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     FirebaseFirestore fireStore = null;
+    Map<String, Object> user = new HashMap<>();
+
+    Button connectButton;
+    EditText nameField;
+    EditText surnameField;
+    Button addUserButton;
+    Button userPanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        connectButton = (Button) findViewById(R.id.connectButton);
+        nameField = (EditText) findViewById(R.id.nameField);
+        surnameField = (EditText) findViewById(R.id.surnameField);
+        addUserButton = (Button) findViewById(R.id.addUserButton);
+        userPanel = (Button) findViewById(R.id.userPanelButton);
 
-
-        Map<String, Object> user = new HashMap<>();
-//        user.put("name", "Filip");
-        user.put("surname", "Szczepanek");
-
-
-//        fireStore.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                System.out.println();
-//            }
-//        });
-
-        Button connectButton = (Button) findViewById(R.id.connectButton);
         connectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,9 +75,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        EditText nameField = (EditText) findViewById(R.id.nameField);
-        EditText surnameField = (EditText) findViewById(R.id.surnameField);
-        Button addUserButton = (Button) findViewById(R.id.addUserButton);
         addUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,5 +98,13 @@ public class MainActivity extends AppCompatActivity {
                 surnameField.setText("");
             }
         });
+        userPanel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, UserPanelActivity.class));
+
+            }
+        });
+
     }
 }

@@ -5,10 +5,50 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.RegisterFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+    <EditText
+        android:id="@+id/emailField"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:hint="email" />
 
+    <EditText
+        android:id="@+id/nameField"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:hint="name" />
+
+    <EditText
+        android:id="@+id/surnameField"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:hint="surname" />
+    <EditText
+        android:id="@+id/birthdayField"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:hint="date of birth" />
+    <EditText
+        android:id="@+id/passwordField"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:hint="password" />
+    <EditText
+        android:id="@+id/confirmPasswordField"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:hint="confirm password" />
+
+    <Button
+        android:layout_width="300px"
+        android:layout_height="100px"
+        android:width="300dp"
+        android:id="@+id/registerButton"
+        android:background="@drawable/mybutton"
+        android:text="Register" />
+</LinearLayout>
 </FrameLayout>
