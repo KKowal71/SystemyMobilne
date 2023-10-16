@@ -9,21 +9,28 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.olinestore.LoginActivity;
 import com.example.olinestore.MainActivity;
 import com.example.olinestore.R;
+import com.example.olinestore.UserPanelActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class LoginFragment extends Fragment {
 
 
-    Button continueAsGuestButton;
-    View view;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +47,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        continueAsGuestButton = (Button) view.findViewById(R.id.continueAsGuestButton);
+        init(view);
 
         continueAsGuestButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,5 +56,69 @@ public class LoginFragment extends Fragment {
                 startActivity(new Intent(getActivity(), MainActivity.class));
             }
         });
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = usernameField.getText().toString();
+                String password = passwordField.getText().toString();
+                if (areAuthStringsCorrect(email, password)) {
+                    authenticate(email, password);
+                }
+            }
+        });;
     }
+
+    private boolean areAuthStringsCorrect(String email, String password) {
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(getActivity(), "Enter email",
+                           Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (TextUtils.isEmpty(password)) {
+            Toast.makeText(getActivity(), "Enter password",
+                           Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
+    private void authenticate(String email, String password) {
+//        firebaseAuth.signOut();
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(getActivity(),
+                                       new AuthOnCompleteListener());
+    }
+
+    private class AuthOnCompleteListener
+            implements OnCompleteListener<AuthResult> {
+        @Override
+        public void onComplete(@NonNull Task<AuthResult> task) {
+            if (task.isSuccessful()) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+//                GO TO MAIN ACTIVITY;
+                startActivity(
+                        new Intent(getActivity(), UserPanelActivity.class));
+                Toast.makeText(getActivity(), "LOGIN SUCCESSFUL",
+                               Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity(), "LOGIN UNSUCCESSFUL",
+                               Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private void init(@NonNull View view) {
+        firebaseAuth = FirebaseAuth.getInstance();
+        continueAsGuestButton = view.findViewById(R.id.continueAsGuestButton);
+        usernameField = view.findViewById(R.id.usernameField);
+        passwordField = view.findViewById(R.id.passwordField);
+        loginButton = view.findViewById(R.id.loginButton);
+    }
+
+    private FirebaseAuth firebaseAuth;
+    private EditText usernameField;
+    private EditText passwordField;
+    private Button loginButton;
+    private Button continueAsGuestButton;
 }
