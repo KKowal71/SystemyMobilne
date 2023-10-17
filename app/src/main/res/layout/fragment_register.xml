@@ -29,6 +29,7 @@
         android:hint="surname" />
     <EditText
         android:id="@+id/birthdayField"
+        android:inputType="date"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:hint="date of birth" />

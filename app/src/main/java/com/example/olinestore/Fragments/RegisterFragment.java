@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.olinestore.MainActivity;
 import com.example.olinestore.R;
 import com.example.olinestore.UserPanelActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,6 +22,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class RegisterFragment extends Fragment {
@@ -66,6 +69,7 @@ public class RegisterFragment extends Fragment {
         dateOfBirthField = view.findViewById(R.id.birthdayField);
         registerButton = view.findViewById(R.id.registerButton);
         firebaseAuth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
     }
 
     private void authenticate(String email, String password) {
@@ -73,6 +77,7 @@ public class RegisterFragment extends Fragment {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(),
                                        new AuthOnCompleteListener());
+
     }
 
     private boolean areAuthStringsCorrect(String email, String password) {
@@ -95,12 +100,12 @@ public class RegisterFragment extends Fragment {
         @Override
         public void onComplete(@NonNull Task<AuthResult> task) {
             if (task.isSuccessful()) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
+                addUserDataToFirestore();
 //                GO TO MAIN ACTIVITY;
                 startActivity(
                         new Intent(getActivity(), UserPanelActivity.class));
                 Toast.makeText(getActivity(), "REIGSTER SUCCESSFUL",
-                              Toast.LENGTH_LONG).show();
+                               Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(getActivity(), "REIGSTER NOT SUCCESSFUL",
                                Toast.LENGTH_LONG).show();
@@ -108,6 +113,35 @@ public class RegisterFragment extends Fragment {
         }
     }
 
+    private void addUserDataToFirestore() {
+        Map<String, Object> user = getUserInputMap();
+        String userID = firebaseAuth.getUid();
+        firestore.collection(userCollectionName).document(userID).set(user)
+                .addOnCompleteListener(
+                        task -> Toast.makeText(getContext(), "USER CREATED",
+                                       Toast.LENGTH_LONG).show());
+    }
+
+    private Map<String, Object> getUserInputMap() {
+        Map<String, Object> user = new HashMap<>();
+
+        String email = emailField.getText().toString();
+        user.put("email", email);
+
+        String name = nameField.getText().toString();
+        user.put("name", name);
+
+        String surname = surnameField.getText().toString();
+        user.put("surname", surname);
+
+        String birthday = dateOfBirthField.getText().toString();
+        user.put("birthday", birthday);
+        return user;
+    }
+
+    private String userCollectionName = "registeredUsers";
+
+    private FirebaseFirestore firestore;
     private FirebaseAuth firebaseAuth;
     private EditText emailField;
     private EditText nameField;

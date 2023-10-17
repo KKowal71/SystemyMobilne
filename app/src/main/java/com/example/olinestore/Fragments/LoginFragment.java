@@ -6,9 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.olinestore.LoginActivity;
 import com.example.olinestore.MainActivity;
 import com.example.olinestore.R;
 import com.example.olinestore.UserPanelActivity;
@@ -49,12 +45,9 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         init(view);
 
-        continueAsGuestButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        continueAsGuestButton.setOnClickListener(view1 -> {
 //                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_mainActivity);
-                startActivity(new Intent(getActivity(), MainActivity.class));
-            }
+            startActivity(new Intent(getActivity(), MainActivity.class));
         });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +59,7 @@ public class LoginFragment extends Fragment {
                     authenticate(email, password);
                 }
             }
-        });;
+        });
     }
 
     private boolean areAuthStringsCorrect(String email, String password) {
