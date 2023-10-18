@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.olinestore.MainActivity;
 import com.example.olinestore.R;
 import com.example.olinestore.UserPanelActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -103,7 +104,7 @@ public class RegisterFragment extends Fragment {
                 addUserDataToFirestore();
 //                GO TO MAIN ACTIVITY;
                 startActivity(
-                        new Intent(getActivity(), UserPanelActivity.class));
+                        new Intent(getActivity(), MainActivity.class));
                 Toast.makeText(getActivity(), "REIGSTER SUCCESSFUL",
                                Toast.LENGTH_LONG).show();
             } else {

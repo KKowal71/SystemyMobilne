@@ -5,51 +5,240 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
+    android:theme="@style/Theme.OlineStore"
     tools:context=".MainActivity">
 
-    <LinearLayout
+
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="@+id/coordinatorLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
-        <TextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="160dp"
+                    android:layout_height="42dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Hi, marek"
+                    android:textColor="#00ffff"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/editTextText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="32dp"
+                    android:background="@drawable/search_background"
+                    android:drawableLeft="@android:drawable/ic_menu_search"
+                    android:ems="10"
+                    android:hint="Look up item"
+                    android:inputType="text"
+                    android:minHeight="48dp"
+                    android:paddingStart="10dp"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+
+            app:fabCradleMargin="10dp"
+            app:fabCradleRoundedCornerRadius="25dp"
+            app:fabCradleVerticalOffset="5dp"
+            >
+
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavigationView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="16dp"
+
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/homeBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/homeImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/baseline_home_24" />
+
+                        <TextView
+                            android:id="@+id/homeBtnTV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Home"
+                            android:textAlignment="center"
+                            android:textColor="#676767"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/infoButton"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/accountInfoImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.2"
+                            app:srcCompat="@drawable/baseline_person_24" />
+
+                        <TextView
+                            android:id="@+id/accountInfoTV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Account"
+                            android:textAlignment="center"
+                            android:textColor="#676767"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2"
+                            android:visibility="invisible" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Home"
+                            android:textAlignment="center"
+                            android:textColor="#676767"
+                            android:textSize="12sp"
+                            android:visibility="invisible" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/historyButton"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/historyImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2"
+                            app:srcCompat="@drawable/baseline_history_24" />
+
+                        <TextView
+                            android:id="@+id/historyTV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="History"
+                            android:textAlignment="center"
+                            android:textColor="#676767"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/settingsButton"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/settingsImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2"
+                            app:srcCompat="@drawable/baseline_settings_24" />
+
+
+                        <TextView
+                            android:id="@+id/settingsTV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Settings"
+                            android:textAlignment="center"
+                            android:textColor="#676767"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+
+        </com.google.android.material.bottomappbar.BottomAppBar>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/cartButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Connect to firebase"
+            android:backgroundTint="#5eff86"
+            android:contentDescription="@string/app_name"
+            android:elevation="3dp"
+            android:src="@android:drawable/ic_menu_mylocation"
+            app:backgroundTint="#ff5e00"
+            app:layout_anchor="@id/app_bar">
 
-            />
-        <Button
-            android:id="@+id/connectButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CONNECT" />
-        <EditText
-            android:id="@+id/nameField"
-            android:layout_width="200dp"
-            android:layout_height="48dp"
-            android:hint="enter name"
-            />
-        <EditText
-            android:id="@+id/surnameField"
-            android:layout_width="200dp"
-            android:layout_height="48dp"
-            android:hint="enter surname"
-            />
 
-        <Button
-            android:id="@+id/addUserButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ADD USER" />
-
-        <Button
-            android:id="@+id/userPanelButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="User Panel" />
-
-    </LinearLayout>
-
+        </com.google.android.material.floatingactionbutton.FloatingActionButton>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

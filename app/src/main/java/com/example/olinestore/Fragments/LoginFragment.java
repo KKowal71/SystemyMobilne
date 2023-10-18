@@ -91,7 +91,7 @@ public class LoginFragment extends Fragment {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
 //                GO TO MAIN ACTIVITY;
                 startActivity(
-                        new Intent(getActivity(), UserPanelActivity.class));
+                        new Intent(getActivity(), MainActivity.class));
                 Toast.makeText(getActivity(), "LOGIN SUCCESSFUL",
                                Toast.LENGTH_LONG).show();
             } else {
