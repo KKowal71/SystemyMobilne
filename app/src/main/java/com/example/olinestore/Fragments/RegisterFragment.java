@@ -7,12 +7,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.olinestore.MainActivity;
@@ -49,6 +51,22 @@ public class RegisterFragment extends Fragment {
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init(view);
+
+        closedEyeImage1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isDataVisible(passwordField, isPasswordShown1, closedEyeImage1);
+                isPasswordShown1 = !isPasswordShown1;
+            }
+        });
+
+        closedEyeImage2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isDataVisible(confirmPasswordField, isPasswordShown2, closedEyeImage2);
+                isPasswordShown2 = !isPasswordShown2;
+            }
+        });
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,32 +87,47 @@ public class RegisterFragment extends Fragment {
         confirmPasswordField = view.findViewById(R.id.confirmPasswordField);
         dateOfBirthField = view.findViewById(R.id.birthdayField);
         registerButton = view.findViewById(R.id.registerButton);
+        closedEyeImage1 = view.findViewById(R.id.closedEyeImage1);
+        closedEyeImage2 = view.findViewById(R.id.closedEyeImage2);
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
+        isPasswordShown1 = false;
+        isPasswordShown2 = false;
     }
 
     private void authenticate(String email, String password) {
         firebaseAuth.signOut();
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(),
-                                       new AuthOnCompleteListener());
+                        new AuthOnCompleteListener());
 
     }
 
     private boolean areAuthStringsCorrect(String email, String password) {
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(getActivity(), "Enter email",
-                           Toast.LENGTH_LONG).show();
+                    Toast.LENGTH_LONG).show();
             return false;
         }
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(getActivity(), "Enter password",
-                           Toast.LENGTH_LONG).show();
+                    Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
     }
 
+    private void isDataVisible(EditText field, boolean check, ImageView icon) {
+        if (check) {
+            field.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            field.setSelection(passwordField.getText().length());
+            icon.setImageResource(R.drawable.closed_eye);
+        } else {
+            field.setInputType(InputType.TYPE_CLASS_TEXT);
+            field.setSelection(passwordField.getText().length());
+            icon.setImageResource(R.drawable.baseline_open_eye_24);
+        }
+    }
 
     private class AuthOnCompleteListener
             implements OnCompleteListener<AuthResult> {
@@ -106,10 +139,10 @@ public class RegisterFragment extends Fragment {
                 startActivity(
                         new Intent(getActivity(), MainActivity.class));
                 Toast.makeText(getActivity(), "REIGSTER SUCCESSFUL",
-                               Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(getActivity(), "REIGSTER NOT SUCCESSFUL",
-                               Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -120,7 +153,7 @@ public class RegisterFragment extends Fragment {
         firestore.collection(userCollectionName).document(userID).set(user)
                 .addOnCompleteListener(
                         task -> Toast.makeText(getContext(), "USER CREATED",
-                                       Toast.LENGTH_LONG).show());
+                                Toast.LENGTH_LONG).show());
     }
 
     private Map<String, Object> getUserInputMap() {
@@ -151,4 +184,8 @@ public class RegisterFragment extends Fragment {
     private EditText confirmPasswordField;
     private EditText dateOfBirthField;
     private Button registerButton;
+    private ImageView closedEyeImage1;
+    private ImageView closedEyeImage2;
+    private boolean isPasswordShown1;
+    private boolean isPasswordShown2;
 }
