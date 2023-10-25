@@ -24,7 +24,7 @@
       android:layout_width="0dp"
       android:layout_height="0dp"
       android:layout_marginStart="16dp"
-      android:layout_marginTop="32dp"
+      android:layout_marginTop="70dp"
       android:layout_marginEnd="16dp"
       android:layout_marginBottom="32dp"
       app:layout_constraintBottom_toTopOf="@+id/button"
@@ -33,5 +33,16 @@
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintVertical_bias="0.0"
       tools:layout="@layout/fragment_user_finances" />
+
+  <ImageView
+      android:id="@+id/logOutButton"
+      android:layout_width="40dp"
+      android:layout_height="34dp"
+      android:layout_marginTop="28dp"
+      android:layout_marginEnd="36dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:srcCompat="@drawable/baseline_logout_24" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

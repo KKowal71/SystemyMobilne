@@ -6,12 +6,15 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.olinestore.MainActivity;
@@ -45,9 +48,17 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         init(view);
 
-        continueAsGuestButton.setOnClickListener(view1 -> {
-//                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_mainActivity);
-            startActivity(new Intent(getActivity(), MainActivity.class));
+//        continueAsGuestButton.setOnClickListener(view1 -> {
+////                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_mainActivity);
+//            startActivity(new Intent(getActivity(), MainActivity.class));
+//        });
+
+        closedEyeImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isDataVisible(passwordField, isPasswordShown, closedEyeImageView);
+                isPasswordShown = !isPasswordShown;
+            }
         });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +102,7 @@ public class LoginFragment extends Fragment {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
 //                GO TO MAIN ACTIVITY;
                 startActivity(
-                        new Intent(getActivity(), MainActivity.class));
+                        new Intent(getActivity(), MainActivity.class).putExtra("isGuest", false));
                 Toast.makeText(getActivity(), "LOGIN SUCCESSFUL",
                                Toast.LENGTH_LONG).show();
             } else {
@@ -101,17 +112,34 @@ public class LoginFragment extends Fragment {
         }
     }
 
+    private void isDataVisible(EditText field, boolean check, ImageView icon) {
+        if (check) {
+            field.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            field.setSelection(passwordField.getText().length());
+            icon.setImageResource(R.drawable.closed_eye);
+        } else {
+            field.setInputType(InputType.TYPE_CLASS_TEXT);
+            field.setSelection(passwordField.getText().length());
+            icon.setImageResource(R.drawable.baseline_open_eye_24);
+        }
+    }
+
     private void init(@NonNull View view) {
         firebaseAuth = FirebaseAuth.getInstance();
-        continueAsGuestButton = view.findViewById(R.id.continueAsGuestButton);
+//        continueAsGuestButton = view.findViewById(R.id.continueAsGuestButton);
         usernameField = view.findViewById(R.id.usernameField);
         passwordField = view.findViewById(R.id.passwordField);
         loginButton = view.findViewById(R.id.loginButton);
+        closedEyeImageView = view.findViewById(R.id.closedEyeImage);
+        isPasswordShown = false;
     }
 
     private FirebaseAuth firebaseAuth;
     private EditText usernameField;
     private EditText passwordField;
     private Button loginButton;
-    private Button continueAsGuestButton;
+//    private Button continueAsGuestButton;
+    private ImageView closedEyeImageView;
+    private boolean isPasswordShown;
+
 }

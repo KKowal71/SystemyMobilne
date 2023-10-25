@@ -137,7 +137,7 @@ public class RegisterFragment extends Fragment {
                 addUserDataToFirestore();
 //                GO TO MAIN ACTIVITY;
                 startActivity(
-                        new Intent(getActivity(), MainActivity.class));
+                        new Intent(getActivity(), MainActivity.class).putExtra("isGuest", false));
                 Toast.makeText(getActivity(), "REIGSTER SUCCESSFUL",
                         Toast.LENGTH_LONG).show();
             } else {
