@@ -233,7 +233,7 @@
             android:backgroundTint="#5eff86"
             android:contentDescription="@string/app_name"
             android:elevation="3dp"
-            android:src="@android:drawable/ic_menu_mylocation"
+            android:src="@drawable/baseline_shopping_bag_24"
             app:backgroundTint="#ff5e00"
             app:layout_anchor="@id/app_bar">
 
@@ -266,55 +266,49 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="210dp"
                     android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/button8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Button" />
-
-                    <Button
-                        android:id="@+id/button7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Button" />
-
-                    <Button
-                        android:id="@+id/button6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Button" />
-
-                    <Button
-                        android:id="@+id/button5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Button" />
-
-                    <Button
-                        android:id="@+id/button4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Button" />
-
-                    <Button
-                        android:id="@+id/button3"
+                    <androidx.fragment.app.FragmentContainerView
+                        android:id="@+id/fragmentContainerView"
+                        android:name="com.example.olinestore.Fragments.ItemFragment"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Button" />
+                        android:layout_height="200dp"
+                        android:layout_weight="1"
+                        tools:layout="@layout/fragment_item" />
 
-                    <Button
-                        android:id="@+id/button2"
+                    <androidx.fragment.app.FragmentContainerView
+                        android:id="@+id/fragmentContainerView5"
+                        android:name="com.example.olinestore.Fragments.ItemFragment"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Button" />
+                        android:layout_height="200dp"
+                        android:layout_weight="1"
+                        tools:layout="@layout/fragment_item" />
+
+                    <androidx.fragment.app.FragmentContainerView
+                        android:id="@+id/fragmentContainerView6"
+                        android:name="com.example.olinestore.Fragments.ItemFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_weight="1"
+                        tools:layout="@layout/fragment_item" />
+
+                    <androidx.fragment.app.FragmentContainerView
+                        android:id="@+id/fragmentContainerView7"
+                        android:name="com.example.olinestore.Fragments.ItemFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_weight="1"
+                        tools:layout="@layout/fragment_item" />
+
+                    <androidx.fragment.app.FragmentContainerView
+                        android:id="@+id/fragmentContainerView8"
+                        android:name="com.example.olinestore.Fragments.ItemFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_weight="1"
+                        tools:layout="@layout/fragment_item" />
+
                 </LinearLayout>
             </HorizontalScrollView>
 
