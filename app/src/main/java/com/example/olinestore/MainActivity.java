@@ -6,22 +6,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
-import com.example.olinestore.Fragments.UserFinancesFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,7 +68,30 @@ public class MainActivity extends AppCompatActivity {
 //                });
             }
         });
+        ArrayList<ListItem> itemList = new ArrayList<>();
+        itemList.add(new ListItem("Item 1"));
+        itemList.add(new ListItem("Item 2"));
+        itemList.add(new ListItem("Item 3"));
+
+        // Create an ArrayAdapter to bind the data to the ListView
+        ArrayAdapter<ListItem> adapter = new ArrayAdapter<>(
+                this,
+                R.layout.list_item,
+                R.id.textView,
+                itemList
+        );
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemList.add(new ListItem("nowy itemek"));
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        // Set the adapter for the ListView
+        listView.setAdapter(adapter);
     }
+
 
     private void init() {
         setContentView(R.layout.activity_main);
@@ -78,12 +99,16 @@ public class MainActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
         welcomeTextView = findViewById(R.id.welcomeTextView);
         accountInfoImage = findViewById(R.id.accountInfoImage);
+        listView = findViewById(R.id.listView);
+        button = findViewById(R.id.button6);
     }
 
     private TextView welcomeTextView;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firestore;
     private ImageView accountInfoImage;
+    private ListView listView;
+    private Button button;
 
 
 }
