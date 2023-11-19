@@ -1,11 +1,11 @@
 package com.example.olinestore;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,8 +13,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,49 +21,24 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
-        if(firebaseAuth.getUid() != null) {
-            firestore.collection("registeredUsers").document(firebaseAuth.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            welcomeTextView.setText("Hi, " + document.getData().get("name").toString());
+        firebaseAuth.addAuthStateListener(firebaseAuth -> {
+            if(firebaseAuth.getUid() != null) {
+                setupHiTextForUser(firebaseAuth.getUid());
+            } else {
+                welcomeTextView.setText("eShopXpress");
+            }
+        });
 
-                        }
-                    }
-                }
-            });
-        } else {
-            welcomeTextView.setText("eShopXpress");
-        }
-        accountInfoImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                System.out.println(firebaseAuth.getCurrentUser());
-                if(firebaseAuth.getUid() == null) {
-                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                } else{
-                    startActivity(new Intent(getApplicationContext(), UserPanelActivity.class));
-                }
-//                FirebaseAuth
-//                if(firebaseAuth.getCurrentUser() == null) {
-//                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-//                } else {
-//                    startActivity(new Intent(getApplicationContext(), UserFinancesFragment.class));
-//                }
-//
-//                firebaseAuth.auth().onAuthStateChanged(function(user) {
-//                    if (user) {
-//                        // User is signed in.
-//                    } else {
-//                        // No user is signed in.
-//                    }
-//                });
+        accountInfoImage.setOnClickListener(v -> {
+            if(firebaseAuth.getUid() == null) {
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            } else{
+                startActivity(new Intent(getApplicationContext(), UserPanelActivity.class));
             }
         });
         ArrayList<ListItem> itemList = new ArrayList<>();
@@ -80,12 +53,9 @@ public class MainActivity extends AppCompatActivity {
                 R.id.textView,
                 itemList
         );
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemList.add(new ListItem("nowy itemek"));
-                adapter.notifyDataSetChanged();
-            }
+        button.setOnClickListener(v -> {
+            itemList.add(new ListItem("nowy itemek"));
+            adapter.notifyDataSetChanged();
         });
 
         // Set the adapter for the ListView
@@ -103,6 +73,21 @@ public class MainActivity extends AppCompatActivity {
         button = findViewById(R.id.button6);
     }
 
+    private void setupHiTextForUser(String Uid) {
+        firestore.collection("registeredUsers").document(Uid).get().addOnCompleteListener(
+                task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Object name = document.getData().get("name");
+                            if (name != null) {
+                                welcomeTextView.setText(
+                                        "Hi, " + name);
+                            }
+                        }
+                    }
+                });
+    }
     private TextView welcomeTextView;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firestore;
