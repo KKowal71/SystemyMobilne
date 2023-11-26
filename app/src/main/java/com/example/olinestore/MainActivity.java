@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -90,6 +93,24 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the adapter for the ListView
         listView.setAdapter(adapter);
+        searchText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.length() >= 5){
+                    System.out.println(s);
+                }
+            }
+        });
     }
 
 
@@ -101,9 +122,11 @@ public class MainActivity extends AppCompatActivity {
         accountInfoImage = findViewById(R.id.accountInfoImage);
         listView = findViewById(R.id.listView);
         button = findViewById(R.id.button6);
+        searchText = findViewById(R.id.editTextText);
     }
 
     private TextView welcomeTextView;
+    private EditText searchText;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firestore;
     private ImageView accountInfoImage;

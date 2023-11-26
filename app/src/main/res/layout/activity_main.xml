@@ -316,6 +316,7 @@
     </ScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl1"
         android:layout_width="416dp"
         android:layout_height="280dp"
         android:layout_marginBottom="8dp"
@@ -337,8 +338,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
+            app:layout_constraintEnd_toEndOf="parent"
+            android:focusableInTouchMode="false"
+            android:isScrollContainer="false">
         </ListView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
