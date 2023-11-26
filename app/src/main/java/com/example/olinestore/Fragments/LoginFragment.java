@@ -39,7 +39,6 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
@@ -47,12 +46,6 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init(view);
-
-//        continueAsGuestButton.setOnClickListener(view1 -> {
-////                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_mainActivity);
-//            startActivity(new Intent(getActivity(), MainActivity.class));
-//        });
-
         closedEyeImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,7 +81,6 @@ public class LoginFragment extends Fragment {
     }
 
     private void authenticate(String email, String password) {
-//        firebaseAuth.signOut();
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(),
                                        new AuthOnCompleteListener());
@@ -100,9 +92,8 @@ public class LoginFragment extends Fragment {
         public void onComplete(@NonNull Task<AuthResult> task) {
             if (task.isSuccessful()) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-//                GO TO MAIN ACTIVITY;
-                startActivity(
-                        new Intent(getActivity(), MainActivity.class).putExtra("isGuest", false));
+
+                getActivity().onBackPressed();
                 Toast.makeText(getActivity(), "LOGIN SUCCESSFUL",
                                Toast.LENGTH_LONG).show();
             } else {
@@ -126,7 +117,6 @@ public class LoginFragment extends Fragment {
 
     private void init(@NonNull View view) {
         firebaseAuth = FirebaseAuth.getInstance();
-//        continueAsGuestButton = view.findViewById(R.id.continueAsGuestButton);
         usernameField = view.findViewById(R.id.usernameField);
         passwordField = view.findViewById(R.id.passwordField);
         loginButton = view.findViewById(R.id.loginButton);
@@ -138,7 +128,6 @@ public class LoginFragment extends Fragment {
     private EditText usernameField;
     private EditText passwordField;
     private Button loginButton;
-//    private Button continueAsGuestButton;
     private ImageView closedEyeImageView;
     private boolean isPasswordShown;
 

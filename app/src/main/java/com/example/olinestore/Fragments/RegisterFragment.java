@@ -135,9 +135,8 @@ public class RegisterFragment extends Fragment {
         public void onComplete(@NonNull Task<AuthResult> task) {
             if (task.isSuccessful()) {
                 addUserDataToFirestore();
-//                GO TO MAIN ACTIVITY;
-                startActivity(
-                        new Intent(getActivity(), MainActivity.class).putExtra("isGuest", false));
+
+                getActivity().onBackPressed();
                 Toast.makeText(getActivity(), "REIGSTER SUCCESSFUL",
                         Toast.LENGTH_LONG).show();
             } else {

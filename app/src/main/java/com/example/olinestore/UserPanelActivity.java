@@ -24,7 +24,7 @@ public class UserPanelActivity extends AppCompatActivity {
             public void onClick(View v) {
                 firebaseAuth.signOut();
                 Toast.makeText(getApplicationContext(), "Logged out successfully", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
             }
         });
     }
