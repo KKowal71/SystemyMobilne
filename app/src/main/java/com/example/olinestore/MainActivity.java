@@ -6,12 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-<<<<<<< HEAD
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-=======
->>>>>>> 5a7787a294fb73417251aef6de6bc813318cf086
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         init();
         firebaseAuth.addAuthStateListener(firebaseAuth -> {
-            if(firebaseAuth.getUid() != null) {
+            if (firebaseAuth.getUid() != null) {
                 setupHiTextForUser(firebaseAuth.getUid());
             } else {
                 welcomeTextView.setText("eShopXpress");
@@ -42,16 +39,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         accountInfoImage.setOnClickListener(v -> {
-            if(firebaseAuth.getUid() == null) {
+            if (firebaseAuth.getUid() == null) {
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-            } else{
+            } else {
                 startActivity(new Intent(getApplicationContext(), UserPanelActivity.class));
             }
         });
         ArrayList<ListItem> itemList = new ArrayList<>();
-        itemList.add(new ListItem("Item 1"));
-        itemList.add(new ListItem("Item 2"));
-        itemList.add(new ListItem("Item 3"));
 
         // Create an ArrayAdapter to bind the data to the ListView
         ArrayAdapter<ListItem> adapter = new ArrayAdapter<>(
@@ -61,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 itemList
         );
         button.setOnClickListener(v -> {
-            itemList.add(new ListItem("nowy itemek"));
+//            itemList.add(new ListItem("nowy itemek"));
             adapter.notifyDataSetChanged();
         });
 
@@ -80,10 +74,13 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.length() >= 5){
+                if (s.length() >= 5) {
                     System.out.println(s);
                 }
             }
+        });
+        button.setOnClickListener(v -> {
+            startActivity(new Intent(getApplicationContext(), AllItemsActivity.class));
         });
     }
 
@@ -95,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         welcomeTextView = findViewById(R.id.welcomeTextView);
         accountInfoImage = findViewById(R.id.accountInfoImage);
         listView = findViewById(R.id.listView);
-        button = findViewById(R.id.button6);
+        button = findViewById(R.id.allItemsButton);
         searchText = findViewById(R.id.editTextText);
     }
 
@@ -114,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
     private TextView welcomeTextView;
     private EditText searchText;
     private FirebaseAuth firebaseAuth;
