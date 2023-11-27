@@ -1,5 +1,11 @@
 package com.example.olinestore;
 
+import android.graphics.Bitmap;
+import android.widget.ImageView;
+
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 public class ListItem {
     private String text;
     private String brand;
@@ -8,6 +14,14 @@ public class ListItem {
     private String name;
     private String currency;
     private float price;
+
+
+
+    private String imagePath;
+
+    public String getImagePath() {
+        return imagePath;
+    }
 
     public String getBrand() {
         return brand;
@@ -33,13 +47,14 @@ public class ListItem {
         return price;
     }
 
-    public ListItem(String name, String brand, String categories, String colors, float price, String currency) {
+    public ListItem(String name, String brand, String categories, String colors, float price, String currency, String imagePath) {
         this.name = name;
         this.brand = brand;
         this.categories = categories;
         this.colors = colors;
         this.currency = currency;
         this.price = price;
+        this.imagePath = imagePath;
     }
 
     public String getText() {

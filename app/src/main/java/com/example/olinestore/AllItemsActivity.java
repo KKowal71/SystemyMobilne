@@ -2,19 +2,26 @@ package com.example.olinestore;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
 public class AllItemsActivity extends AppCompatActivity {
     private FirebaseFirestore firestore;
+    private FirebaseStorage storage;
     private ArrayList<ListItem> itemList;
     ItemsAdapter adapter;
 
@@ -25,6 +32,7 @@ public class AllItemsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_items);
+        storage = FirebaseStorage.getInstance();
         itemsListView = findViewById(R.id.itemsListView);
         totalAmountTextView = findViewById(R.id.totalAmountTextView);
         firestore = FirebaseFirestore.getInstance();
@@ -50,7 +58,7 @@ public class AllItemsActivity extends AppCompatActivity {
                                 float price = Float.parseFloat((String) document.getData().get("prices.amountMin"));
                                 String categories = (String) document.getData().get("categories");
                                 String currency = (String) document.getData().get("prices.currency");
-                                ListItem item = new ListItem(name, brand, categories, colors, price, currency);
+                                ListItem item = new ListItem(name, brand, categories, colors, price, currency, "images/buty.png");
                                 System.out.println(item.toString());
                                 itemList.add(item);
                             } catch (NumberFormatException e) {
@@ -65,3 +73,6 @@ public class AllItemsActivity extends AppCompatActivity {
                 });
     }
 }
+
+
+
