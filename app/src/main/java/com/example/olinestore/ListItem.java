@@ -1,20 +1,16 @@
 package com.example.olinestore;
 
-import android.graphics.Bitmap;
-import android.widget.ImageView;
+import androidx.annotation.NonNull;
 
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import java.io.Serializable;
 
-public class ListItem {
-    private String text;
+public class ListItem implements Serializable {
     private String brand;
     private String categories;
     private String colors;
     private String name;
     private String currency;
     private float price;
-
 
 
     private String imagePath;
@@ -55,13 +51,5 @@ public class ListItem {
         this.currency = currency;
         this.price = price;
         this.imagePath = imagePath;
-    }
-
-    public String getText() {
-        return this.text;
-    }
-    @Override
-    public String toString() {
-        return name + brand + price;
     }
 }

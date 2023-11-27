@@ -58,14 +58,14 @@ public class ItemsAdapter extends BaseAdapter {
 
         TextView nameTextView = convertView.findViewById(R.id.nameTextView);
         TextView brandTextView = convertView.findViewById(R.id.brandTextView);
-        TextView colorsTextView = convertView.findViewById(R.id.colorsTextView);
+//        TextView colorsTextView = convertView.findViewById(R.id.colorsTextView);
         TextView priceTextView = convertView.findViewById(R.id.priceTextView);
-        TextView categoriesTextView = convertView.findViewById(R.id.categoryTextView);
+//        TextView categoriesTextView = convertView.findViewById(R.id.categoryTextView);
         ImageView itemImageView = convertView.findViewById(R.id.itemImageView);
         nameTextView.setText(dataList.get(position).getName());
         brandTextView.setText(dataList.get(position).getBrand());
-        colorsTextView.setText(dataList.get(position).getColors());
-        categoriesTextView.setText(dataList.get(position).getCategories());
+//        colorsTextView.setText(dataList.get(position).getColors());
+//        categoriesTextView.setText(dataList.get(position).getCategories());
         priceTextView.setText(String.valueOf(dataList.get(position).getPrice()) + " " + dataList.get(position).getCurrency());
 
 
