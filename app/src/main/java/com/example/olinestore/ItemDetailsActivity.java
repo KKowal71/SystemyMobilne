@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,41 +18,44 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.Locale;
+import java.util.Map;
+
 public class ItemDetailsActivity extends AppCompatActivity {
-    Button addToBagButton;
-    TextView nameTextView;
-    TextView brandTextView;
-    TextView colorsTextView;
-    TextView priceTextView;
-    TextView categoriesTextView;
-    ImageView itemImageView;
-    Bag bag;
+    private Button addToBagButton;
+    private TextView nameTextView;
+    private TextView brandTextView;
+    private TextView colorsTextView;
+    private TextView priceTextView;
+    private TextView categoriesTextView;
+    private ImageView itemImageView;
+    private Bag bag;
+    ListItem item;
+    private LinearLayout colorsView;
+    private Map<String, Integer> colors =  Map.of("green", Color.parseColor("#008000"), "yellow", Color.parseColor("#FFFF00"), "black", Color.parseColor("#000000"), "white", Color.parseColor("#FFFFFF"),"grey", Color.parseColor("#808080"), "blue", Color.parseColor("#0000FF"), "brown", Color.parseColor("#593611"), "orange", Color.parseColor("#e38a0e"));
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_details);
+
         bag = Bag.getInstance();
-        System.out.println(bag.getText());
         Intent intent = getIntent();
-//        String name = intent.getStringExtra("name");
-//        String brand = intent.getStringExtra("brand");
-//        String price = intent.getStringExtra("price");
-//        String categories = intent.getStringExtra("categories");
-//        String colors = intent.getStringExtra("colors");
-//        String imagePath = intent.getStringExtra("imagePath");
-        ListItem item = (ListItem) intent.getSerializableExtra("item");
+        item = (ListItem) intent.getSerializableExtra("item");
         nameTextView = findViewById(R.id.itemDetailsName);
         brandTextView = findViewById(R.id.brandDetailsTextView);
         colorsTextView = findViewById(R.id.colorsDetailsTextView);
+        colorsView = findViewById(R.id.colorsView);
         priceTextView = findViewById(R.id.itemDetailsPrice);
         categoriesTextView = findViewById(R.id.categoriesDetailsTextView);
         itemImageView = findViewById(R.id.itemDetailsImage);
         nameTextView.setText(item.getName());
         appendText(brandTextView, item.getBrand());
         appendText(categoriesTextView, item.getCategories());
-        appendText(colorsTextView, item.getColors());
+//        appendText(colorsTextView, item.getColors());
+        addColorImageView();
+
         priceTextView.setText(item.getPrice() + " " + item.getCurrency());
         StorageReference imageRef = FirebaseStorage.getInstance().getReference(item.getImagePath());
         Task<byte[]> image = imageRef.getBytes(1024 * 1024);
@@ -71,6 +77,32 @@ public class ItemDetailsActivity extends AppCompatActivity {
     private void appendText(TextView textView, String textToAppend) {
         String text = textView.getText().toString() + ("\n" + textToAppend);
         textView.setText(text);
+    }
+
+    private void addColorImageView() {
+        String [] itemColors = item.getColors().split(",");
+        for(String element :itemColors){
+            if(colors.containsKey(element.toLowerCase())){
+                ImageView color = new ImageView(this);
+                color.setMinimumWidth(100);
+                color.setMinimumHeight(100);
+                color.setBackgroundColor(colors.get(element.toLowerCase()));
+                LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+                params1.setMargins(0, 0, 8, 0); // Set right margin for space
+                color.setLayoutParams(params1);
+                colorsView.addView(color);
+            }
+        }
+//        colors.forEach((key, value) -> {
+//            if(Arrays.asList(itemColors).contains(key)){
+//                ImageView color = new ImageView(this);
+//                color.setBackgroundColor(value);
+//                colorsView.addView(color);
+//            }
+//        });
     }
 
 }

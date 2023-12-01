@@ -1,92 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ItemDetailsActivity">
 
-    <ImageView
-        android:id="@+id/itemDetailsImage"
-        android:layout_width="303dp"
-        android:layout_height="287dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="55dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+   <androidx.constraintlayout.widget.ConstraintLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:padding="15dp">
+       <ImageView
+           android:id="@+id/itemDetailsImage"
+           android:layout_width="303dp"
+           android:layout_height="287dp"
+           android:layout_marginStart="56dp"
+           android:layout_marginTop="32dp"
+           android:layout_marginEnd="55dp"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toTopOf="parent"
+           tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/itemDetailsName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="32dp"
-        android:text="TextView"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itemDetailsImage" />
+       <TextView
+           android:id="@+id/itemDetailsName"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_marginStart="32dp"
+           android:layout_marginTop="24dp"
+           android:layout_marginEnd="32dp"
+           android:text="TextView"
+           android:textSize="34sp"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/itemDetailsImage" />
 
-    <TextView
-        android:id="@+id/itemDetailsPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itemDetailsName" />
+       <TextView
+           android:id="@+id/itemDetailsPrice"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginStart="32dp"
+           android:layout_marginTop="8dp"
+           android:text="TextView"
+           android:textSize="24sp"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/itemDetailsName" />
 
-    <Button
-        android:id="@+id/addToBagButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="52dp"
-        android:text="Add to bag"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itemDetailsName" />
+       <Button
+           android:id="@+id/addToBagButton"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="3dp"
+           android:layout_marginEnd="52dp"
+           android:text="Add to bag"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/itemDetailsName" />
 
-    <TextView
-        android:id="@+id/colorsDetailsTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:text="Colors"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itemDetailsPrice" />
+       <TextView
+           android:id="@+id/colorsDetailsTextView"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_marginStart="32dp"
+           android:layout_marginTop="32dp"
+           android:layout_marginEnd="32dp"
+           android:text="Colors"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/itemDetailsPrice" />
 
-    <TextView
-        android:id="@+id/brandDetailsTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:text="Brand"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/colorsDetailsTextView" />
+       <HorizontalScrollView
+           android:id="@+id/colorsContainer"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_marginStart="32dp"
+           android:layout_marginTop="9dp"
+           android:layout_marginEnd="32dp"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/colorsDetailsTextView">
 
-    <TextView
-        android:id="@+id/categoriesDetailsTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="32dp"
-        android:text="Categories"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/colorsDetailsTextView" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+           <LinearLayout
+               android:id="@+id/colorsView"
+               android:layout_width="wrap_content"
+               android:layout_height="match_parent"
+               android:orientation="horizontal" />
+       </HorizontalScrollView>
+
+       <TextView
+           android:id="@+id/brandDetailsTextView"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_marginStart="32dp"
+           android:layout_marginTop="24dp"
+           android:layout_marginEnd="32dp"
+           android:text="Brand"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintHorizontal_bias="0.0"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/colorsContainer" />
+
+       <TextView
+           android:id="@+id/categoriesDetailsTextView"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_marginStart="32dp"
+           android:layout_marginTop="20dp"
+           android:layout_marginEnd="32dp"
+           android:text="Categories"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintHorizontal_bias="0.0"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/brandDetailsTextView" />
+   </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

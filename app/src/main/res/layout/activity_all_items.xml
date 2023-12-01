@@ -26,13 +26,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/allItemsHeader" >
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName">
 
     </ListView>
 
@@ -56,7 +56,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="3dp"
         android:layout_marginEnd="60dp"
-        android:text="previous"
+        android:background="@drawable/round_arrow_back_24"
         app:layout_constraintEnd_toStartOf="@+id/pageNumberTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/itemsListView" />
@@ -68,9 +68,33 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="3dp"
         android:layout_marginEnd="32dp"
-        android:text="next"
+        android:background="@drawable/baseline_arrow_forward_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/pageNumberTextView"
         app:layout_constraintTop_toBottomOf="@+id/itemsListView" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="80dp"
+        android:ems="10"
+        android:hint="Search item"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/allItemsHeader" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="60dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/baseline_search_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName"
+        tools:layout_editor_absoluteY="79dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
