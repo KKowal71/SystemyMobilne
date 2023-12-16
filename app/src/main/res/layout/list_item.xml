@@ -74,16 +74,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/priceTextView" />
 
-    <EditText
+    <Button
+        android:id="@+id/addAmountButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/amountTextNumber"
+        app:layout_constraintTop_toBottomOf="@+id/priceTextView" />
+    <Button
+        android:id="@+id/removeAmountButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text="-"
+        app:layout_constraintStart_toEndOf="@+id/amountTextView"
+        app:layout_constraintEnd_toStartOf="@+id/amountTextNumber"
+        app:layout_constraintTop_toBottomOf="@+id/priceTextView"
+        />
+    <TextView
         android:id="@+id/amountTextNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:inputType="number"
         android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/amountTextView"
+        app:layout_constraintStart_toEndOf="@+id/removeAmountButton"
+        app:layout_constraintEnd_toStartOf="@+id/addAmountButton"
         app:layout_constraintTop_toBottomOf="@+id/priceTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

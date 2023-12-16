@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -76,7 +77,19 @@ public class ItemsAdapter extends BaseAdapter {
         ImageView itemImageView = convertView.findViewById(R.id.itemImageView);
         TextView sizeTextView = convertView.findViewById(R.id.sizeTextView);
         TextView amountTextView = convertView.findViewById(R.id.amountTextView);
-        EditText amountTextNumber = convertView.findViewById(R.id.amountTextNumber);
+        TextView amountTextNumber = convertView.findViewById(R.id.amountTextNumber);
+        Button addAmountButton = convertView.findViewById(R.id.addAmountButton);
+        addAmountButton.setOnClickListener(l -> {
+            Integer val = Integer.parseInt(amountTextNumber.getText().toString());
+            amountTextNumber.setText(val+1);
+        });
+        Button removeAmountButton = convertView.findViewById(R.id.removeAmountButton);
+        removeAmountButton.setOnClickListener(l -> {
+            Integer val = Integer.parseInt(amountTextNumber.getText().toString());
+            if (val > 1) {
+                amountTextNumber.setText(val - 1);
+            }
+        });
         amountTextNumber.setText(String.valueOf(dataList.get(position).getAmount()));
         nameTextView.setText(dataList.get(position).getName());
         brandTextView.setText(dataList.get(position).getBrand());
@@ -100,6 +113,8 @@ public class ItemsAdapter extends BaseAdapter {
             sizeTextView.setVisibility(sizeTextView.VISIBLE);
             amountTextView.setVisibility(sizeTextView.VISIBLE);
             amountTextNumber.setVisibility(sizeTextView.VISIBLE);
+            addAmountButton.setVisibility(sizeTextView.VISIBLE);
+            removeAmountButton.setVisibility(sizeTextView.VISIBLE);
             sizeTextView.setText("Size: " + dataList.get(position).getSize());
             amountTextView.setText("Amount: ");
 

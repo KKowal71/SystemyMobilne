@@ -54,11 +54,6 @@ public class AllItemsActivity extends AppCompatActivity {
         getCategoriesFromStorage();
 
 
-
-
-
-
-
         itemsListView = findViewById(R.id.itemsListView);
         nextPageButton = findViewById(R.id.nextPageButton);
         previousPageButton = findViewById(R.id.previusPageButton);
@@ -82,8 +77,9 @@ public class AllItemsActivity extends AppCompatActivity {
 
         itemsListView.setOnItemClickListener((parent, view, position, id) -> {
             // Handle item click
-            String xd = displayedItemList.get(position).getName();
-            Toast.makeText(AllItemsActivity.this, xd, Toast.LENGTH_SHORT).show();
+            ;
+            String chosenItem = displayedItemList.get(position).getName();
+            Toast.makeText(AllItemsActivity.this, chosenItem, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(AllItemsActivity.this, ItemDetailsActivity.class);
             intent.putExtra("item", itemList.get(position));
             startActivity(intent);
@@ -100,7 +96,7 @@ public class AllItemsActivity extends AppCompatActivity {
     }
 
     private void handleDisplayedItem(String mode) {
-        if (mode.equals("next") && pageNumber < itemList.size() / 10 + 1) {
+        if (mode.equals("next") && pageNumber < itemList.size() / 10) {
             pageNumber += 1;
         } else if (mode.equals("previous") && pageNumber > 0) {
             pageNumber -= 1;
@@ -127,6 +123,7 @@ public class AllItemsActivity extends AppCompatActivity {
                                 System.out.println(e);
                             }
                         }
+                        pageNumber = 0;
                         showSpecifiedNumberOfItems();
                         itemsAdapter.notifyDataSetChanged();
 //                        totalAmountTextView.setText(String.valueOf(itemList.size()) + " products");
