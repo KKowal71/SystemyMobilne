@@ -7,16 +7,21 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.Locale;
 import java.util.Map;
@@ -32,14 +37,14 @@ public class ItemDetailsActivity extends AppCompatActivity {
     private Bag bag;
     ListItem item;
     private LinearLayout colorsView;
+    private ImageButton backButton;
     private Map<String, Integer> colors =  Map.of("green", Color.parseColor("#008000"), "yellow", Color.parseColor("#FFFF00"), "black", Color.parseColor("#000000"), "white", Color.parseColor("#FFFFFF"),"grey", Color.parseColor("#808080"), "blue", Color.parseColor("#0000FF"), "brown", Color.parseColor("#593611"), "orange", Color.parseColor("#e38a0e"));
-
+    private Spinner sizeSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_details);
-
         bag = Bag.getInstance();
         Intent intent = getIntent();
         item = (ListItem) intent.getSerializableExtra("item");
@@ -48,11 +53,11 @@ public class ItemDetailsActivity extends AppCompatActivity {
         colorsTextView = findViewById(R.id.colorsDetailsTextView);
         colorsView = findViewById(R.id.colorsView);
         priceTextView = findViewById(R.id.itemDetailsPrice);
-        categoriesTextView = findViewById(R.id.categoriesDetailsTextView);
+//        categoriesTextView = findViewById(R.id.categoriesDetailsTextView);
         itemImageView = findViewById(R.id.itemDetailsImage);
         nameTextView.setText(item.getName());
         appendText(brandTextView, item.getBrand());
-        appendText(categoriesTextView, item.getCategories());
+//        appendText(categoriesTextView, item.getCategories());
 //        appendText(colorsTextView, item.getColors());
         addColorImageView();
 
@@ -70,8 +75,16 @@ public class ItemDetailsActivity extends AppCompatActivity {
         addToBagButton = findViewById(R.id.addToBagButton);
         addToBagButton.setOnClickListener(v-> {
             bag.addToBag(item);
-            Intent toBagIntent = new Intent(ItemDetailsActivity.this, BagActivity.class);
-            startActivity(toBagIntent);
+            onBackPressed();
+//            Intent toBagIntent = new Intent(ItemDetailsActivity.this, BagActivity.class);
+//            startActivity(toBagIntent);
+        });
+        sizeSpinner = findViewById(R.id.sizeSpinner);
+//        ArrayAdapter<String> sizeSpinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, )
+
+        backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(v->{
+            onBackPressed();
         });
     }
     private void appendText(TextView textView, String textToAppend) {
@@ -96,13 +109,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
                 colorsView.addView(color);
             }
         }
-//        colors.forEach((key, value) -> {
-//            if(Arrays.asList(itemColors).contains(key)){
-//                ImageView color = new ImageView(this);
-//                color.setBackgroundColor(value);
-//                colorsView.addView(color);
-//            }
-//        });
+
     }
 
 }

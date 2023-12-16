@@ -1,5 +1,7 @@
 package com.example.olinestore;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -17,24 +19,19 @@ public class Bag {
     }
 
     public float getTotalAmount() {
-        return totalAmount;
+        return (float) (Math.round(totalAmount * 100.0) / 100.0);
     }
 
     public void addToBag(ListItem listItem) {
         items.add(listItem);
-        updateTotalAmount();
+        totalAmount += listItem.getPrice();
     }
 
     public void removeFromBag(ListItem listItem) {
         items.remove(listItem);
-        updateTotalAmount();
+        totalAmount -= listItem.getPrice();
     }
 
-    private void updateTotalAmount() {
-        for (ListItem item : items) {
-            totalAmount += item.getPrice();
-        }
-    }
 
     public String getText() {
         return text;

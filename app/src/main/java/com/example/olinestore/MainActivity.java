@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 welcomeTextView.setText("eShopXpress");
             }
+        });
+
+        bagButton.setOnClickListener(v->{
+            startActivity(new Intent(MainActivity.this, BagActivity.class));
         });
 
         accountInfoImage.setOnClickListener(v -> {
@@ -94,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         button = findViewById(R.id.allItemsButton);
         searchText = findViewById(R.id.editTextText);
+        bagButton = findViewById(R.id.cartButton);
     }
 
     private void setupHiTextForUser(String Uid) {
@@ -119,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView accountInfoImage;
     private ListView listView;
     private Button button;
+    private FloatingActionButton bagButton;
 
 
 }

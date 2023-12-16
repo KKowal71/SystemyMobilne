@@ -55,7 +55,6 @@ public class ItemsAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.list_item, null);
         }
-
         TextView nameTextView = convertView.findViewById(R.id.nameTextView);
         TextView brandTextView = convertView.findViewById(R.id.brandTextView);
 //        TextView colorsTextView = convertView.findViewById(R.id.colorsTextView);
@@ -70,7 +69,7 @@ public class ItemsAdapter extends BaseAdapter {
 
 
         StorageReference imageRef = FirebaseStorage.getInstance().getReference(dataList.get(position).getImagePath());
-        Task<byte[]> image = imageRef.getBytes(1024 * 1024);
+        Task<byte[]> image = imageRef.getBytes(1024 * 1024 * 5);
         image.addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] byteArray) {
@@ -86,11 +85,6 @@ public class ItemsAdapter extends BaseAdapter {
                 // imageView.setImageBitmap(bitmap);
             }
         });
-
-
-
-
-
 
         return convertView;
     }

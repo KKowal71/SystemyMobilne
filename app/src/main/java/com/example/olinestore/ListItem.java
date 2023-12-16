@@ -50,6 +50,12 @@ public class ListItem implements Serializable {
         this.colors = colors;
         this.currency = currency;
         this.price = price;
-        this.imagePath = imagePath;
+        if (!imagePath.isEmpty()) {
+            this.imagePath = "images/" + imagePath;
+        } else{
+            this.imagePath = "images/buty.png";
+        }
+        System.out.println(this.imagePath);
+        System.out.println(imagePath);
     }
 }

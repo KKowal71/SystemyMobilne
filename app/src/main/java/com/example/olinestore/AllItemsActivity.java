@@ -4,8 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,8 +25,12 @@ public class AllItemsActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private ArrayList<ListItem> itemList;
     private ArrayList<ListItem> displayedItemList;
-    ItemsAdapter adapter;
+    ItemsAdapter itemsAdapter;
+    ArrayAdapter<String> categoriesAdapter;
+    private Spinner categoriesSpinner;
 
+    private ArrayList<String> categories;
+    private String category = "Shoes";
     private ListView itemsListView;
     private TextView totalAmountTextView;
     private Button nextPageButton;
@@ -33,20 +42,31 @@ public class AllItemsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_items);
+        categoriesSpinner = findViewById(R.id.categoriesSpinner);
         storage = FirebaseStorage.getInstance();
+        firestore = FirebaseFirestore.getInstance();
+        categories = new ArrayList<>();
+        getCategoriesFromStorage();
+        String[] options = {"Opcja 1", "Opcja 2", "Opcja 3"};
+
+
+
+
+
+
 
         itemsListView = findViewById(R.id.itemsListView);
         nextPageButton = findViewById(R.id.nextPageButton);
         previousPageButton = findViewById(R.id.previusPageButton);
 
         totalAmountTextView = findViewById(R.id.pageNumberTextView);
-        firestore = FirebaseFirestore.getInstance();
+
         itemList = new ArrayList<>();
         displayedItemList = new ArrayList<>();
         getDataFromFirestore();
 
-        adapter = new ItemsAdapter(this, displayedItemList);
-        itemsListView.setAdapter(adapter);
+        itemsAdapter = new ItemsAdapter(this, displayedItemList);
+        itemsListView.setAdapter(itemsAdapter);
 
         nextPageButton.setOnClickListener(v -> {
             handleDisplayedItem("next");
@@ -60,25 +80,19 @@ public class AllItemsActivity extends AppCompatActivity {
         itemsListView.setOnItemClickListener((parent, view, position, id) -> {
             // Handle item click
             String xd = displayedItemList.get(position).getName();
-            Toast.makeText(AllItemsActivity.this,xd, Toast.LENGTH_SHORT).show();
+            Toast.makeText(AllItemsActivity.this, xd, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(AllItemsActivity.this, ItemDetailsActivity.class);
-//            intent.putExtra("name", displayedItemList.get(position).getName());
-//            intent.putExtra("brand", displayedItemList.get(position).getBrand());
-//            intent.putExtra("colors", displayedItemList.get(position).getColors());
-//            intent.putExtra("price", String.valueOf(displayedItemList.get(position).getPrice()) + " " + displayedItemList.get(position).getCurrency());
-//            intent.putExtra("categories", displayedItemList.get(position).getCategories());
-//            intent.putExtra("imagePath", displayedItemList.get(position).getImagePath());
             intent.putExtra("item", itemList.get(position));
             startActivity(intent);
         });
-}
+    }
 
     private void showSpecifiedNumberOfItems() {
         displayedItemList.clear();
-        for (int i = pageNumber * numberOfItems; i < (pageNumber + 1) * numberOfItems; i++) {
+        for (int i = pageNumber * numberOfItems; i < (pageNumber + 1) * numberOfItems && i < itemList.size(); i++) {
             displayedItemList.add(itemList.get(i));
         }
-        adapter.notifyDataSetChanged();
+        itemsAdapter.notifyDataSetChanged();
         totalAmountTextView.setText("Page " + String.valueOf(pageNumber + 1));
     }
 
@@ -91,7 +105,8 @@ public class AllItemsActivity extends AppCompatActivity {
     }
 
     private void getDataFromFirestore() {
-        firestore.collection("items")
+        itemList.clear();
+        firestore.collection(category)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -100,17 +115,18 @@ public class AllItemsActivity extends AppCompatActivity {
                                 String name = (String) document.getData().get("name");
                                 String brand = (String) document.getData().get("brand");
                                 String colors = (String) document.getData().get("colors");
-                                float price = Float.parseFloat((String) document.getData().get("prices.amountMin"));
+                                float price = Float.parseFloat((String) document.getData().get("price"));
                                 String categories = (String) document.getData().get("categories");
-                                String currency = (String) document.getData().get("prices.currency");
-                                ListItem item = new ListItem(name, brand, categories, colors, price, currency, "images/buty.png");
+                                String currency = (String) document.getData().get("currency");
+                                String path = (String) document.getData().get("img");
+                                ListItem item = new ListItem(name, brand, categories, colors, price, currency, path);
                                 itemList.add(item);
                             } catch (NumberFormatException e) {
                                 System.out.println(e);
                             }
                         }
                         showSpecifiedNumberOfItems();
-                        adapter.notifyDataSetChanged();
+                        itemsAdapter.notifyDataSetChanged();
 //                        totalAmountTextView.setText(String.valueOf(itemList.size()) + " products");
                     } else {
                         System.out.println("error");
@@ -118,6 +134,41 @@ public class AllItemsActivity extends AppCompatActivity {
                 });
     }
 
+    private void getCategoriesFromStorage() {
+        firestore.collection("categories").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    try {
+                        categories.add((String) document.getData().get("name"));
+                    } catch (NumberFormatException e) {
+                        System.out.println(e);
+                    }
+                }
+                categoriesAdapter = new ArrayAdapter<>(
+                        this, android.R.layout.simple_spinner_item, categories
+                );
+                handleSpinnerActions();
+            }
+        });
+    }
+
+    private void handleSpinnerActions() {
+        categoriesSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                category = parent.getItemAtPosition(position).toString();
+                Toast.makeText(AllItemsActivity.this,  category, Toast.LENGTH_SHORT).show();
+                getDataFromFirestore();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categoriesSpinner.setAdapter(categoriesAdapter);
+    }
 
 }
 

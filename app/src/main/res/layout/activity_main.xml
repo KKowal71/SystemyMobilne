@@ -341,7 +341,14 @@
             android:focusableInTouchMode="false"
             android:isScrollContainer="false"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" >
+
+<!--            <androidx.fragment.app.FragmentContainerView-->
+<!--                android:name="com.example.olinestore.Fragments.allItemsFragment"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                tools:layout="@layout/activity_all_items"></androidx.fragment.app.FragmentContainerView>-->
+        </ListView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

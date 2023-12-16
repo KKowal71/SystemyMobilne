@@ -10,12 +10,13 @@
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:padding="15dp">
+
        <ImageView
            android:id="@+id/itemDetailsImage"
            android:layout_width="303dp"
            android:layout_height="287dp"
            android:layout_marginStart="56dp"
-           android:layout_marginTop="32dp"
+           android:layout_marginTop="50dp"
            android:layout_marginEnd="55dp"
            app:layout_constraintEnd_toEndOf="parent"
            app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +52,7 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_marginTop="3dp"
-           android:layout_marginEnd="52dp"
+           android:layout_marginEnd="28dp"
            android:text="Add to bag"
            app:layout_constraintEnd_toEndOf="parent"
            app:layout_constraintTop_toBottomOf="@+id/itemDetailsName" />
@@ -99,18 +100,28 @@
            app:layout_constraintStart_toStartOf="parent"
            app:layout_constraintTop_toBottomOf="@+id/colorsContainer" />
 
-       <TextView
-           android:id="@+id/categoriesDetailsTextView"
-           android:layout_width="0dp"
-           android:layout_height="wrap_content"
-           android:layout_marginStart="32dp"
-           android:layout_marginTop="20dp"
-           android:layout_marginEnd="32dp"
-           android:text="Categories"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintHorizontal_bias="0.0"
+       <ImageButton
+           android:id="@+id/backButton"
+           android:layout_width="60dp"
+           android:layout_height="34dp"
+           android:layout_marginStart="6dp"
+           android:layout_marginBottom="8dp"
+           android:background="#00FFFFFF"
+           app:layout_constraintBottom_toTopOf="@+id/itemDetailsImage"
            app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toBottomOf="@+id/brandDetailsTextView" />
+           app:srcCompat="@drawable/round_arrow_back_24" />
+
+       <Spinner
+           android:id="@+id/sizeSpinner"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginStart="50dp"
+           android:layout_marginTop="3dp"
+           android:layout_marginEnd="50dp"
+           app:layout_constraintEnd_toStartOf="@+id/addToBagButton"
+           app:layout_constraintStart_toEndOf="@+id/itemDetailsPrice"
+           app:layout_constraintTop_toBottomOf="@+id/itemDetailsName" />
+
    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
