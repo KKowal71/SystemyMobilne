@@ -16,7 +16,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SummaryActivity extends AppCompatActivity {
     private FirebaseFirestore firestore;
@@ -57,10 +61,22 @@ public class SummaryActivity extends AppCompatActivity {
         updateUserAddress();
         confirmPaymentButton.setOnClickListener(v -> {
             updateUserBalance(firebaseAuth.getUid());
+            updateHistory();
         });
 
     }
 
+
+    private void updateHistory() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("uID", firebaseAuth.getUid());
+        data.put("date", new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
+        data.put("nrOfItems", itemsCount);
+        data.put("orderPrice", totalAmount);
+        firestore
+                .collection("History")
+                .add(data);
+    }
     private void updateUserAddress() {
         firestore
                 .collection("registeredUsers")
