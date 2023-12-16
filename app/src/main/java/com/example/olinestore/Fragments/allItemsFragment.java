@@ -13,9 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.olinestore.AllItemsActivity;
 import com.example.olinestore.ItemDetailsActivity;
 import com.example.olinestore.ItemsAdapter;
 import com.example.olinestore.ListItem;

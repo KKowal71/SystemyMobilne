@@ -58,7 +58,7 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView2"
-      tools:layout="@layout/fragment_user_finances" />
+      tools:layout="@layout/fragment_delivery_address" />
 
   <ImageView
       android:id="@+id/logOutButton"

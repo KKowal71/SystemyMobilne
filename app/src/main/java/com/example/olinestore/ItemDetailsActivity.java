@@ -63,12 +63,9 @@ public class ItemDetailsActivity extends AppCompatActivity {
         colorsTextView = findViewById(R.id.colorsDetailsTextView);
         colorsView = findViewById(R.id.colorsView);
         priceTextView = findViewById(R.id.itemDetailsPrice);
-//        categoriesTextView = findViewById(R.id.categoriesDetailsTextView);
         itemImageView = findViewById(R.id.itemDetailsImage);
         nameTextView.setText(item.getName());
         appendText(brandTextView, item.getBrand());
-//        appendText(categoriesTextView, item.getCategories());
-//        appendText(colorsTextView, item.getColors());
         addColorImageView();
 
         priceTextView.setText(item.getPrice() + " " + item.getCurrency());
@@ -87,15 +84,8 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
         addToBagButton = findViewById(R.id.addToBagButton);
         addToBagButton.setOnClickListener(v -> {
-            if (item.getSize() == null) {
-                Toast.makeText(ItemDetailsActivity.this, "CHOOSE SIZE FIRST",
-                               Toast.LENGTH_SHORT).show();
-            } else {
-                bag.addToBag(item);
-                onBackPressed();
-            }
-//            Intent toBagIntent = new Intent(ItemDetailsActivity.this, BagActivity.class);
-//            startActivity(toBagIntent);
+            bag.addToBag(item);
+            onBackPressed();
         });
         sizeSpinner = findViewById(R.id.sizeSpinner);
         ArrayAdapter<CharSequence> sizeSpinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, item.getSizes());

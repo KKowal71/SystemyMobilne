@@ -2,21 +2,23 @@ package com.example.olinestore;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
+
 import android.widget.TextView;
 
 
+import com.example.olinestore.Fragments.HistoryFragment;
+import com.example.olinestore.Fragments.SettingsFragment;
+import com.google.android.gms.dynamic.SupportFragmentWrapper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -50,43 +52,33 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), UserPanelActivity.class));
             }
         });
-        ArrayList<ListItem> itemList = new ArrayList<>();
 
-        // Create an ArrayAdapter to bind the data to the ListView
-        ArrayAdapter<ListItem> adapter = new ArrayAdapter<>(
-                this,
-                R.layout.list_item,
-                R.id.textView,
-                itemList
-        );
-        button.setOnClickListener(v -> {
-//            itemList.add(new ListItem("nowy itemek"));
-            adapter.notifyDataSetChanged();
-        });
 
-        // Set the adapter for the ListView
-        listView.setAdapter(adapter);
-        searchText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+        settingsImage.setOnClickListener(v -> {
+            if (firebaseAuth.getUid() != null) {
+                SettingsFragment fragment = new SettingsFragment();
+                FragmentTransaction transaction = fm.beginTransaction();
+                transaction.replace(R.id.homeFragment, fragment);
+                transaction.commitNow();
+            } else {
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+        });
 
+        historyImage.setOnClickListener(v -> {
+            if (firebaseAuth.getUid() != null) {
+                HistoryFragment fragment = new HistoryFragment();
+                FragmentTransaction transaction = fm.beginTransaction();
+                transaction.replace(R.id.homeFragment, fragment);
+                transaction.commitNow();
+            } else {
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() >= 5) {
-                    System.out.println(s);
-                }
-            }
         });
-        button.setOnClickListener(v -> {
-            startActivity(new Intent(getApplicationContext(), AllItemsActivity.class));
-        });
+
     }
 
 
@@ -96,10 +88,11 @@ public class MainActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
         welcomeTextView = findViewById(R.id.welcomeTextView);
         accountInfoImage = findViewById(R.id.accountInfoImage);
-        listView = findViewById(R.id.listView);
-        button = findViewById(R.id.allItemsButton);
+
         searchText = findViewById(R.id.editTextText);
         bagButton = findViewById(R.id.cartButton);
+        settingsImage = findViewById(R.id.settingsImage);
+        historyImage = findViewById(R.id.historyImage);
     }
 
     private void setupHiTextForUser(String Uid) {
@@ -123,9 +116,12 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firestore;
     private ImageView accountInfoImage;
-    private ListView listView;
-    private Button button;
+    private ImageView settingsImage;
+    private ImageView historyImage;
+
     private FloatingActionButton bagButton;
+
+    private FragmentManager fm = getSupportFragmentManager();
 
 
 }
