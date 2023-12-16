@@ -79,23 +79,29 @@ public class ItemsAdapter extends BaseAdapter {
         TextView amountTextView = convertView.findViewById(R.id.amountTextView);
         TextView amountTextNumber = convertView.findViewById(R.id.amountTextNumber);
         Button addAmountButton = convertView.findViewById(R.id.addAmountButton);
-        addAmountButton.setOnClickListener(l -> {
-            Integer val = Integer.parseInt(amountTextNumber.getText().toString());
-            amountTextNumber.setText(val+1);
-        });
-        Button removeAmountButton = convertView.findViewById(R.id.removeAmountButton);
-        removeAmountButton.setOnClickListener(l -> {
-            Integer val = Integer.parseInt(amountTextNumber.getText().toString());
-            if (val > 1) {
-                amountTextNumber.setText(val - 1);
-            }
-        });
+
         amountTextNumber.setText(String.valueOf(dataList.get(position).getAmount()));
         nameTextView.setText(dataList.get(position).getName());
         brandTextView.setText(dataList.get(position).getBrand());
         priceTextView.setText(String.valueOf(dataList.get(position).getPrice()) + " " + dataList.get(position).getCurrency());
         Bag bag = Bag.getInstance();
-
+        addAmountButton.setOnClickListener(l -> {
+            int val = dataList.get(position).getAmount();
+            val += 1;
+            dataList.get(position).setAmount(val);
+            amountTextNumber.setText(String.valueOf(val));
+            updateBag(bag);
+        });
+        Button removeAmountButton = convertView.findViewById(R.id.removeAmountButton);
+        removeAmountButton.setOnClickListener(l -> {
+            int val = dataList.get(position).getAmount();
+            if (val > 1) {
+                val -= 1;
+                dataList.get(position).setAmount(val);
+                amountTextNumber.setText(String.valueOf(val));
+                updateBag(bag);
+            }
+        });
         StorageReference imageRef = FirebaseStorage.getInstance().getReference(dataList.get(position).getImagePath());
         Task<byte[]> image = imageRef.getBytes(1024 * 1024 * 5);
         image.addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -117,41 +123,16 @@ public class ItemsAdapter extends BaseAdapter {
             removeAmountButton.setVisibility(sizeTextView.VISIBLE);
             sizeTextView.setText("Size: " + dataList.get(position).getSize());
             amountTextView.setText("Amount: ");
-
-            amountTextNumber.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if(!amountTextNumber.getText().toString().equals("")) {
-//                        amountTextNumber.setText(String.valueOf(dataList.get(position).getAmount()));
-
-                        dataList.get(position).setAmount(Integer.parseInt(amountTextNumber.getText().toString()));
-                        bag.calculateTotalAmount();
-                        DecimalFormat decimalFormat = new DecimalFormat("####.####");
-                        String formattedValue = decimalFormat.format(bag.getTotalAmount());
-                        totalAmount.setText(formattedValue + " USD");
-                    }}
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            });
         }
 
         return convertView;
     }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView imageView;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            imageView = itemView.findViewById(R.id.itemImageView);
-        }
+    private void updateBag(Bag bag) {
+        bag.calculateTotalAmount();
+        DecimalFormat decimalFormat = new DecimalFormat("####.####");
+        String formattedValue = decimalFormat.format(bag.getTotalAmount());
+        totalAmount.setText(formattedValue + " USD");
     }
+
+
 }
