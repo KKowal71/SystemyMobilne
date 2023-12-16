@@ -38,7 +38,15 @@ public class ItemDetailsActivity extends AppCompatActivity {
     ListItem item;
     private LinearLayout colorsView;
     private ImageButton backButton;
-    private Map<String, Integer> colors =  Map.of("green", Color.parseColor("#008000"), "yellow", Color.parseColor("#FFFF00"), "black", Color.parseColor("#000000"), "white", Color.parseColor("#FFFFFF"),"grey", Color.parseColor("#808080"), "blue", Color.parseColor("#0000FF"), "brown", Color.parseColor("#593611"), "orange", Color.parseColor("#e38a0e"));
+    private Map<String, Integer> colors =
+            Map.of("green", Color.parseColor("#008000"), "yellow",
+                   Color.parseColor("#FFFF00"), "black",
+                   Color.parseColor("#000000"), "white",
+                   Color.parseColor("#FFFFFF"), "grey",
+                   Color.parseColor("#808080"), "blue",
+                   Color.parseColor("#0000FF"), "brown",
+                   Color.parseColor("#593611"), "orange",
+                   Color.parseColor("#e38a0e"));
     private Spinner sizeSpinner;
 
     @Override
@@ -62,18 +70,21 @@ public class ItemDetailsActivity extends AppCompatActivity {
         addColorImageView();
 
         priceTextView.setText(item.getPrice() + " " + item.getCurrency());
-        StorageReference imageRef = FirebaseStorage.getInstance().getReference(item.getImagePath());
+        StorageReference imageRef =
+                FirebaseStorage.getInstance().getReference(item.getImagePath());
         Task<byte[]> image = imageRef.getBytes(1024 * 1024);
         image.addOnSuccessListener(byteArray -> {
             if (byteArray == null || byteArray.length == 0) {
-                Toast.makeText(ItemDetailsActivity.this, "Image can not be set", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ItemDetailsActivity.this, "Image can not be set",
+                               Toast.LENGTH_SHORT).show();
             }
-            Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0,
+                                                          byteArray.length);
             itemImageView.setImageBitmap(bitmap);
         });
 
         addToBagButton = findViewById(R.id.addToBagButton);
-        addToBagButton.setOnClickListener(v-> {
+        addToBagButton.setOnClickListener(v -> {
             bag.addToBag(item);
             onBackPressed();
 //            Intent toBagIntent = new Intent(ItemDetailsActivity.this, BagActivity.class);
@@ -83,27 +94,29 @@ public class ItemDetailsActivity extends AppCompatActivity {
 //        ArrayAdapter<String> sizeSpinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, )
 
         backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(v->{
+        backButton.setOnClickListener(v -> {
             onBackPressed();
         });
     }
+
     private void appendText(TextView textView, String textToAppend) {
         String text = textView.getText().toString() + ("\n" + textToAppend);
         textView.setText(text);
     }
 
     private void addColorImageView() {
-        String [] itemColors = item.getColors().split(",");
-        for(String element :itemColors){
-            if(colors.containsKey(element.toLowerCase())){
+        String[] itemColors = item.getColors().split(",");
+        for (String element : itemColors) {
+            if (colors.containsKey(element.toLowerCase())) {
                 ImageView color = new ImageView(this);
                 color.setMinimumWidth(100);
                 color.setMinimumHeight(100);
                 color.setBackgroundColor(colors.get(element.toLowerCase()));
-                LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
+                LinearLayout.LayoutParams params1 =
+                        new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.WRAP_CONTENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT
+                        );
                 params1.setMargins(0, 0, 8, 0); // Set right margin for space
                 color.setLayoutParams(params1);
                 colorsView.addView(color);

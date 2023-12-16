@@ -44,5 +44,15 @@
       app:layout_constraintTop_toTopOf="parent"
       app:srcCompat="@drawable/baseline_logout_24" />
 
+  <ImageButton
+      android:id="@+id/backButton"
+      android:layout_width="60dp"
+      android:layout_height="34dp"
+      android:layout_marginStart="6dp"
+      android:layout_marginBottom="8dp"
+      android:background="#00FFFFFF"
+      app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView2"
+      app:layout_constraintStart_toStartOf="parent"
+      app:srcCompat="@drawable/round_arrow_back_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
