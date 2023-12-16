@@ -8,30 +8,56 @@
     tools:context=".UserPanelActivity">
 
   <Button
-      android:id="@+id/button"
+      android:id="@+id/changeButton"
+      android:layout_width="150dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="32dp"
+      android:layout_marginBottom="225dp"
+      android:text="Set delivery address"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/CurrentDeliveryAddress" />
+
+
+  <TextView
+      android:id="@+id/textInfo"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:backgroundTint="#E91E63"
-      android:text="Button"
+      android:text="Current delivery address"
+      android:textSize="22sp"
+      android:textStyle="bold"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
 
+  <TextView
+      android:id="@+id/CurrentDeliveryAddress"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="32dp"
+      android:text="Rogaczewska 4, 98-100, Łask"
+      android:textSize="18sp"
+      app:layout_constraintBottom_toTopOf="@id/changeButton"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="@id/textInfo" />
+
   <androidx.fragment.app.FragmentContainerView
-      android:id="@+id/fragmentContainerView2"
-      android:name="com.example.olinestore.Fragments.UserFinancesFragment"
+      android:id="@+id/fragmentContainerView3"
+      android:name="com.example.olinestore.Fragments.DeliveryAddressFragment"
       android:layout_width="0dp"
       android:layout_height="0dp"
       android:layout_marginStart="16dp"
-      android:layout_marginTop="70dp"
+      android:layout_marginTop="25dp"
       android:layout_marginEnd="16dp"
-      android:layout_marginBottom="32dp"
-      app:layout_constraintBottom_toTopOf="@+id/button"
+      android:layout_marginBottom="25dp"
+      android:visibility="invisible"
+      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.0"
+      app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView2"
       tools:layout="@layout/fragment_user_finances" />
 
   <ImageView
@@ -54,5 +80,22 @@
       app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView2"
       app:layout_constraintStart_toStartOf="parent"
       app:srcCompat="@drawable/round_arrow_back_24" />
+
+  <androidx.fragment.app.FragmentContainerView
+      android:id="@+id/fragmentContainerView2"
+      android:name="com.example.olinestore.Fragments.UserFinancesFragment"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="70dp"
+      android:layout_marginEnd="16dp"
+      android:layout_marginBottom="32dp"
+
+      app:layout_constraintBottom_toTopOf="@+id/textInfo"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.0"
+      tools:layout="@layout/fragment_user_finances" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
