@@ -17,6 +17,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.DecimalFormat;
+
 public class UserFinancesFragment extends Fragment {
 
     @Override
@@ -65,7 +67,9 @@ public class UserFinancesFragment extends Fragment {
                                     Double userBalance =
                                             document.getDouble("balance");
                                     if (userBalance != null) {
-                                        balance.setText(userBalance + " USD");
+                                        DecimalFormat decimalFormat = new DecimalFormat("####.####");
+                                        String formattedValue = decimalFormat.format(userBalance);
+                                        balance.setText(formattedValue + " USD");
                                     }
                                 }
                             }

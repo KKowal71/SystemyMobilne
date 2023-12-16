@@ -2,10 +2,11 @@ package com.example.olinestore;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class Bag {
+public class Bag implements Serializable {
     private static Bag instance;
 
 
@@ -40,7 +41,18 @@ public class Bag {
         calculateTotalAmount();
     }
 
+    public int getItemsCount() {
+        int amount = 0;
+        for(ListItem item:items){
+            amount += item.getAmount();
+        }
+        return amount;
+    }
 
+    public void clearBag() {
+        this.items.clear();
+        calculateTotalAmount();
+    }
 
     public static Bag getInstance() {
         if (instance == null) {

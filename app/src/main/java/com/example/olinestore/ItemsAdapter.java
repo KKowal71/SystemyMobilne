@@ -76,15 +76,20 @@ public class ItemsAdapter extends BaseAdapter {
         TextView priceTextView = convertView.findViewById(R.id.priceTextView);
         ImageView itemImageView = convertView.findViewById(R.id.itemImageView);
         TextView sizeTextView = convertView.findViewById(R.id.sizeTextView);
-        TextView amountTextView = convertView.findViewById(R.id.amountTextView);
         TextView amountTextNumber = convertView.findViewById(R.id.amountTextNumber);
-        Button addAmountButton = convertView.findViewById(R.id.addAmountButton);
+        ImageView addAmountButton = convertView.findViewById(R.id.addAmountButton);
 
         amountTextNumber.setText(String.valueOf(dataList.get(position).getAmount()));
         nameTextView.setText(dataList.get(position).getName());
         brandTextView.setText(dataList.get(position).getBrand());
         priceTextView.setText(String.valueOf(dataList.get(position).getPrice()) + " " + dataList.get(position).getCurrency());
         Bag bag = Bag.getInstance();
+        ImageView removeItemButton = convertView.findViewById(R.id.removeItemButton);
+        removeItemButton.setOnClickListener(v->{
+            bag.removeFromBag(dataList.get(position));
+            updateBag(bag);
+            this.notifyDataSetChanged();
+        });
         addAmountButton.setOnClickListener(l -> {
             int val = dataList.get(position).getAmount();
             val += 1;
@@ -92,7 +97,7 @@ public class ItemsAdapter extends BaseAdapter {
             amountTextNumber.setText(String.valueOf(val));
             updateBag(bag);
         });
-        Button removeAmountButton = convertView.findViewById(R.id.removeAmountButton);
+        ImageView removeAmountButton = convertView.findViewById(R.id.removeAmountButton);
         removeAmountButton.setOnClickListener(l -> {
             int val = dataList.get(position).getAmount();
             if (val > 1) {
@@ -117,12 +122,11 @@ public class ItemsAdapter extends BaseAdapter {
         });
         if(isBagView) {
             sizeTextView.setVisibility(sizeTextView.VISIBLE);
-            amountTextView.setVisibility(sizeTextView.VISIBLE);
             amountTextNumber.setVisibility(sizeTextView.VISIBLE);
             addAmountButton.setVisibility(sizeTextView.VISIBLE);
+            removeItemButton.setVisibility(View.VISIBLE);
             removeAmountButton.setVisibility(sizeTextView.VISIBLE);
             sizeTextView.setText("Size: " + dataList.get(position).getSize());
-            amountTextView.setText("Amount: ");
         }
 
         return convertView;
