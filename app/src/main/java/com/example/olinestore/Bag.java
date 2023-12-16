@@ -11,11 +11,19 @@ public class Bag {
 
     private Bag() {}
     private ArrayList<ListItem> items = new ArrayList<>();
-    private float totalAmount;
-    private String text = "japierdole";
+    private float totalAmount = 0;
+
+
 
     public ArrayList<ListItem> getItems() {
         return items;
+    }
+
+    public void calculateTotalAmount() {
+        totalAmount = 0;
+        for(ListItem item:items){
+            totalAmount += item.getPrice() * item.getAmount();
+        }
     }
 
     public float getTotalAmount() {
@@ -24,18 +32,15 @@ public class Bag {
 
     public void addToBag(ListItem listItem) {
         items.add(listItem);
-        totalAmount += listItem.getPrice();
+        calculateTotalAmount();
     }
 
     public void removeFromBag(ListItem listItem) {
         items.remove(listItem);
-        totalAmount -= listItem.getPrice();
+        calculateTotalAmount();
     }
 
 
-    public String getText() {
-        return text;
-    }
 
     public static Bag getInstance() {
         if (instance == null) {

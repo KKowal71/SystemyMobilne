@@ -3,10 +3,14 @@ package com.example.olinestore;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +25,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.lang.reflect.Array;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +33,20 @@ import java.util.List;
 public class ItemsAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<ListItem> dataList;
+    private boolean isBagView;
+    private TextView totalAmount;
+
 
     public ItemsAdapter(Context context, ArrayList<ListItem> dataList) {
         this.context = context;
         this.dataList = dataList;
+    }
+
+    public ItemsAdapter(Context context, ArrayList<ListItem> dataList, boolean isBagView, TextView totalAmount) {
+        this.context = context;
+        this.dataList = dataList;
+        this.isBagView = isBagView;
+        this.totalAmount = totalAmount;
     }
 
     @Override
@@ -57,16 +72,16 @@ public class ItemsAdapter extends BaseAdapter {
         }
         TextView nameTextView = convertView.findViewById(R.id.nameTextView);
         TextView brandTextView = convertView.findViewById(R.id.brandTextView);
-//        TextView colorsTextView = convertView.findViewById(R.id.colorsTextView);
         TextView priceTextView = convertView.findViewById(R.id.priceTextView);
-//        TextView categoriesTextView = convertView.findViewById(R.id.categoryTextView);
         ImageView itemImageView = convertView.findViewById(R.id.itemImageView);
+        TextView sizeTextView = convertView.findViewById(R.id.sizeTextView);
+        TextView amountTextView = convertView.findViewById(R.id.amountTextView);
+        EditText amountTextNumber = convertView.findViewById(R.id.amountTextNumber);
+        amountTextNumber.setText(String.valueOf(dataList.get(position).getAmount()));
         nameTextView.setText(dataList.get(position).getName());
         brandTextView.setText(dataList.get(position).getBrand());
-//        colorsTextView.setText(dataList.get(position).getColors());
-//        categoriesTextView.setText(dataList.get(position).getCategories());
         priceTextView.setText(String.valueOf(dataList.get(position).getPrice()) + " " + dataList.get(position).getCurrency());
-
+        Bag bag = Bag.getInstance();
 
         StorageReference imageRef = FirebaseStorage.getInstance().getReference(dataList.get(position).getImagePath());
         Task<byte[]> image = imageRef.getBytes(1024 * 1024 * 5);
@@ -79,12 +94,39 @@ public class ItemsAdapter extends BaseAdapter {
                 }
                 Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
                 itemImageView.setImageBitmap(bitmap);
-
-                // Use the Bitmap as needed (e.g., display in ImageView)
-                // For example, assuming you have an ImageView named imageView:
-                // imageView.setImageBitmap(bitmap);
             }
         });
+        if(isBagView) {
+            sizeTextView.setVisibility(sizeTextView.VISIBLE);
+            amountTextView.setVisibility(sizeTextView.VISIBLE);
+            amountTextNumber.setVisibility(sizeTextView.VISIBLE);
+            sizeTextView.setText("Size: " + dataList.get(position).getSize());
+            amountTextView.setText("Amount: ");
+
+            amountTextNumber.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if(!amountTextNumber.getText().toString().equals("")) {
+//                        amountTextNumber.setText(String.valueOf(dataList.get(position).getAmount()));
+
+                        dataList.get(position).setAmount(Integer.parseInt(amountTextNumber.getText().toString()));
+                        bag.calculateTotalAmount();
+                        DecimalFormat decimalFormat = new DecimalFormat("####.####");
+                        String formattedValue = decimalFormat.format(bag.getTotalAmount());
+                        totalAmount.setText(formattedValue + " USD");
+                    }}
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+        }
 
         return convertView;
     }

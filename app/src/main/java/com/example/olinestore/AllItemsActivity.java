@@ -19,6 +19,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AllItemsActivity extends AppCompatActivity {
     private FirebaseFirestore firestore;
@@ -26,11 +28,13 @@ public class AllItemsActivity extends AppCompatActivity {
     private ArrayList<ListItem> itemList;
     private ArrayList<ListItem> displayedItemList;
     ItemsAdapter itemsAdapter;
+
     ArrayAdapter<String> categoriesAdapter;
     private Spinner categoriesSpinner;
-
     private ArrayList<String> categories;
     private String category = "Shoes";
+
+    private Map<String, String[]> categoriesSizes;
     private ListView itemsListView;
     private TextView totalAmountTextView;
     private Button nextPageButton;
@@ -46,8 +50,8 @@ public class AllItemsActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         firestore = FirebaseFirestore.getInstance();
         categories = new ArrayList<>();
+        categoriesSizes = new HashMap<>();
         getCategoriesFromStorage();
-        String[] options = {"Opcja 1", "Opcja 2", "Opcja 3"};
 
 
 
@@ -60,7 +64,6 @@ public class AllItemsActivity extends AppCompatActivity {
         previousPageButton = findViewById(R.id.previusPageButton);
 
         totalAmountTextView = findViewById(R.id.pageNumberTextView);
-
         itemList = new ArrayList<>();
         displayedItemList = new ArrayList<>();
         getDataFromFirestore();
@@ -116,10 +119,9 @@ public class AllItemsActivity extends AppCompatActivity {
                                 String brand = (String) document.getData().get("brand");
                                 String colors = (String) document.getData().get("colors");
                                 float price = Float.parseFloat((String) document.getData().get("price"));
-                                String categories = (String) document.getData().get("categories");
                                 String currency = (String) document.getData().get("currency");
                                 String path = (String) document.getData().get("img");
-                                ListItem item = new ListItem(name, brand, categories, colors, price, currency, path);
+                                ListItem item = new ListItem(name, brand, colors, price, currency, path, categoriesSizes.get(category));
                                 itemList.add(item);
                             } catch (NumberFormatException e) {
                                 System.out.println(e);
@@ -139,7 +141,10 @@ public class AllItemsActivity extends AppCompatActivity {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     try {
-                        categories.add((String) document.getData().get("name"));
+                        String categoryName = (String) document.getData().get("name");
+                        String sizes = "size," + document.getData().get("sizes");
+                        categories.add(categoryName);
+                        categoriesSizes.put(categoryName, sizes.split(","));
                     } catch (NumberFormatException e) {
                         System.out.println(e);
                     }

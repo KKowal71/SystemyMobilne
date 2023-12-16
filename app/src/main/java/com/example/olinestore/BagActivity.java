@@ -20,10 +20,10 @@ public class BagActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bag);
         Bag bag = Bag.getInstance();
-        adapter = new ItemsAdapter(this, bag.getItems());
+        totalAmount = findViewById(R.id.totalAmountTextView);
+        adapter = new ItemsAdapter(this, bag.getItems(), true, totalAmount);
         bagListView = findViewById(R.id.bagListView);
         bagListView.setAdapter(adapter);
-        totalAmount = findViewById(R.id.totalAmountTextView);
         // Format the float value using DecimalFormat
         DecimalFormat decimalFormat = new DecimalFormat("####.####");
         String formattedValue = decimalFormat.format(bag.getTotalAmount());

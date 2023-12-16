@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
@@ -80,8 +82,22 @@ public class ItemDetailsActivity extends AppCompatActivity {
 //            startActivity(toBagIntent);
         });
         sizeSpinner = findViewById(R.id.sizeSpinner);
-//        ArrayAdapter<String> sizeSpinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, )
+        ArrayAdapter<CharSequence> sizeSpinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, item.getSizes());
+        sizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+          @Override
+          public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+              String size = parent.getItemAtPosition(position).toString();
+              if (!size.equals("size")){
+                  item.setSize(size);
+              }
+          }
+          @Override
+          public void onNothingSelected(AdapterView<?> parent) {
 
+          }
+         });
+        sizeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sizeSpinner.setAdapter(sizeSpinnerAdapter);
         backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v->{
             onBackPressed();

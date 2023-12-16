@@ -3,6 +3,7 @@ package com.example.olinestore;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class ListItem implements Serializable {
     private String brand;
@@ -11,7 +12,30 @@ public class ListItem implements Serializable {
     private String name;
     private String currency;
     private float price;
+    private String[] sizes;
+    private String size;
 
+    public int getAmount() {
+        return amount;
+    }
+
+    private int amount;
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public String[] getSizes() {
+        return sizes;
+    }
 
     private String imagePath;
 
@@ -43,10 +67,9 @@ public class ListItem implements Serializable {
         return price;
     }
 
-    public ListItem(String name, String brand, String categories, String colors, float price, String currency, String imagePath) {
+    public ListItem(String name, String brand, String colors, float price, String currency, String imagePath, String[] sizes) {
         this.name = name;
         this.brand = brand;
-        this.categories = categories;
         this.colors = colors;
         this.currency = currency;
         this.price = price;
@@ -55,7 +78,7 @@ public class ListItem implements Serializable {
         } else{
             this.imagePath = "images/buty.png";
         }
-        System.out.println(this.imagePath);
-        System.out.println(imagePath);
+        this.sizes = sizes;
+        this.amount = 1;
     }
 }

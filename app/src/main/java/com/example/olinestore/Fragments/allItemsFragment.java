@@ -122,11 +122,11 @@ public class allItemsFragment extends Fragment {
                                 String name = (String) document.getData().get("name");
                                 String brand = (String) document.getData().get("brand");
                                 String colors = (String) document.getData().get("colors");
-                                float price = Float.parseFloat((String) document.getData().get("prices.amountMin"));
+                                float price = Float.parseFloat((String) document.getData().get("price"));
                                 String categories = (String) document.getData().get("categories");
-                                String currency = (String) document.getData().get("prices.currency");
-                                ListItem item = new ListItem(name, brand, categories, colors, price, currency, "images/buty.png");
-                                itemList.add(item);
+                                String currency = (String) document.getData().get("prices");
+//                                ListItem item = new ListItem(name, brand, colors, price, currency, "images/buty.png");
+//                                itemList.add(item);
                             } catch (NumberFormatException e) {
                                 System.out.println(e);
                             }
