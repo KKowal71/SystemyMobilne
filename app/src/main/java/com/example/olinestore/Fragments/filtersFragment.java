@@ -16,7 +16,7 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.olinestore.AllItemsActivity;
+
 import com.example.olinestore.R;
 
 
@@ -54,7 +54,7 @@ public class filtersFragment extends Fragment {
         categoriesSpinner = view.findViewById(R.id.categorySinner);
 
         confirmFilters.setOnClickListener(v->{
-            ((AllItemsActivity) getActivity()).visibilityListener.setValue(false);
+            ((AllItemsFragment) getParentFragment()).visibilityListener.setValue(false);
 
         });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -100,14 +100,14 @@ public class filtersFragment extends Fragment {
             handleSpinnerActions();
     }
     private void handleSpinnerActions() {
-        categoriesSpinner.setAdapter(((AllItemsActivity) getActivity()).categoriesAdapter);
+        categoriesSpinner.setAdapter(((AllItemsFragment) getParentFragment()).categoriesAdapter);
 
         categoriesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ((AllItemsActivity) getActivity()).category = parent.getItemAtPosition(position).toString();
+                ((AllItemsFragment) getParentFragment()).category = parent.getItemAtPosition(position).toString();
 //                Toast.makeText(AllItemsActivity.this,  category, Toast.LENGTH_SHORT).show();
-                ((AllItemsActivity) getActivity()).getDataFromFirestore();
+                ((AllItemsFragment) getParentFragment()).getDataFromFirestore();
             }
 
             @Override

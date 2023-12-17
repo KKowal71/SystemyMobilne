@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +42,7 @@ public class SearchFragment extends Fragment {
         searchText = view.findViewById(R.id.editTextText);
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
+        fm = getChildFragmentManager();
         firebaseAuth.addAuthStateListener(firebaseAuth -> {
             if (firebaseAuth.getUid() != null) {
                 setupHiTextForUser(firebaseAuth.getUid());
@@ -65,8 +68,35 @@ public class SearchFragment extends Fragment {
                 });
     }
 
+    public void changeFragment() {
+        try {
+            HomeFragment possibleFragment =
+                    (HomeFragment) fm.findFragmentById(
+                            R.id.SearchFragmentContainer);
+
+            AllItemsFragment fragment = new AllItemsFragment();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.SearchFragmentContainer, fragment);
+            transaction.commitNow();
+
+
+            System.out.println("ADSAda");
+        } catch (ClassCastException e) {
+            HomeFragment fragment = new HomeFragment();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.SearchFragmentContainer, fragment);
+            transaction.commitNow();
+            System.out.println("EEEEE");
+        }
+    }
+
+    public EditText getSearchText() {
+        return searchText;
+    }
     private FirebaseFirestore firestore;
     private FirebaseAuth firebaseAuth;
     private TextView welcomeTextView;
     private EditText searchText;
+
+    private FragmentManager fm;
 }

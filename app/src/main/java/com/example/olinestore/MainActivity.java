@@ -72,9 +72,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        homeImage.setOnClickListener(v -> {
-            goToHome();
-        });
+        homeImage.setOnClickListener(v ->  goToHome());
     }
 
 

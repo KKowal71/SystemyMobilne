@@ -1,26 +1,31 @@
-package com.example.olinestore;
+package com.example.olinestore.Fragments;
+import com.example.olinestore.ListItem;
+import com.example.olinestore.ItemsAdapter;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import com.example.olinestore.R;
+import com.example.olinestore.ItemDetailsActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.olinestore.Fragments.LoginFragment;
+import com.example.olinestore.Fragments.SearchFragment;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -28,7 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AllItemsActivity extends AppCompatActivity {
+public class AllItemsFragment extends Fragment {
     private FirebaseFirestore firestore;
     private ArrayList<ListItem> itemList;
     private ArrayList<ListItem> filteredItemList;
@@ -53,19 +58,30 @@ public class AllItemsActivity extends AppCompatActivity {
     public MutableLiveData<Boolean>visibilityListener = new MutableLiveData<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_items);
-//        categoriesSpinner = findViewById(R.id.categoriesSpinner);
-        filtersFragment = findViewById(R.id.filtersFragment);
-        filterButton = findViewById(R.id.filtersButton);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_all_items, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        filtersFragment = view.findViewById(R.id.filtersFragment);
+        filterButton = view.findViewById(R.id.filtersButton);
 
 
         visibilityListener.setValue(isFilterFragmentShown);
-        visibilityListener.observe(AllItemsActivity.this, new Observer<Boolean>() {
+        visibilityListener.observe(AllItemsFragment.this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                Toast.makeText(AllItemsActivity.this, String.valueOf(isFilterFragmentShown), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), String.valueOf(isFilterFragmentShown), Toast.LENGTH_SHORT).show();
                 if(!visibilityListener.getValue()) {
                     itemsListView.setVisibility(View.VISIBLE);
                     filterButton.setVisibility(View.VISIBLE);
@@ -87,21 +103,20 @@ public class AllItemsActivity extends AppCompatActivity {
         categoriesSizes = new HashMap<>();
         getCategoriesFromStorage();
 
-        Button searchButton = findViewById(R.id.searchButton);
 
 
-        itemsListView = findViewById(R.id.itemsListView);
-        nextPageButton = findViewById(R.id.nextPageButton);
-        previousPageButton = findViewById(R.id.previusPageButton);
-        searchItemEditText = findViewById(R.id.searchItemEditText);
+        itemsListView = view.findViewById(R.id.itemsListView);
+        nextPageButton = view.findViewById(R.id.nextPageButton);
+        previousPageButton = view.findViewById(R.id.previusPageButton);
+        searchItemEditText = ((SearchFragment)getParentFragment()).getSearchText();
 
-        totalAmountTextView = findViewById(R.id.pageNumberTextView);
+        totalAmountTextView = view.findViewById(R.id.pageNumberTextView);
         itemList = new ArrayList<>();
         filteredItemList = new ArrayList<>();
 
         displayedItemList = new ArrayList<>();
         getDataFromFirestore();
-        itemsAdapter = new ItemsAdapter(this, displayedItemList);
+        itemsAdapter = new ItemsAdapter(getContext(), displayedItemList);
         itemsListView.setAdapter(itemsAdapter);
 
         nextPageButton.setOnClickListener(v -> {
@@ -113,12 +128,12 @@ public class AllItemsActivity extends AppCompatActivity {
             showSpecifiedNumberOfItems();
         });
 
-        itemsListView.setOnItemClickListener((parent, view, position, id) -> {
+        itemsListView.setOnItemClickListener((parent, view2, position, id) -> {
             // Handle item click
             ;
             String chosenItem = displayedItemList.get(position).getName();
-            Toast.makeText(AllItemsActivity.this, chosenItem, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(AllItemsActivity.this, ItemDetailsActivity.class);
+            Toast.makeText(getContext(), chosenItem, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getContext(), ItemDetailsActivity.class);
             intent.putExtra("item", itemList.get(position));
             startActivity(intent);
         });
@@ -152,8 +167,7 @@ public class AllItemsActivity extends AppCompatActivity {
 
             }
         });
-    }
-
+    };
     private void showSpecifiedNumberOfItems() {
         displayedItemList.clear();
         for (int i = pageNumber * numberOfItems; i < (pageNumber + 1) * numberOfItems && i < filteredItemList.size(); i++) {
@@ -215,8 +229,7 @@ public class AllItemsActivity extends AppCompatActivity {
                         System.out.println(e);
                     }
                 }
-                categoriesAdapter = new ArrayAdapter<>(
-                        this, android.R.layout.simple_spinner_item, categories
+                categoriesAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categories
                 );
                 categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/Theme.OlineStore"
     tools:context=".Fragments.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -111,11 +112,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <!--            <androidx.fragment.app.FragmentContainerView-->
-                <!--                android:name="com.example.olinestore.Fragments.allItemsFragment"-->
-                <!--                android:layout_width="wrap_content"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                tools:layout="@layout/activity_all_items"></androidx.fragment.app.FragmentContainerView>-->
             </ListView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
