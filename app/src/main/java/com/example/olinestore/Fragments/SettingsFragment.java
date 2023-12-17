@@ -51,10 +51,8 @@ public class SettingsFragment extends Fragment {
         String[] langs = {"English", "Polish", "Espanol"};
         ArrayAdapter<CharSequence> langSpinnerAdapt = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, langs);
         langSpinner.setAdapter(langSpinnerAdapt);
+        setSwitchState();
         textSize.setOnCheckedChangeListener(sizeListener);
-
-        textSize.setChecked(wasSizeChecked);
-
     }
 
 
@@ -71,6 +69,7 @@ public class SettingsFragment extends Fragment {
 
 
     private class SizeListener implements CompoundButton.OnCheckedChangeListener {
+
         @Override
         public void onCheckedChanged(CompoundButton compoundButton,
         boolean isChecked) {
@@ -78,13 +77,21 @@ public class SettingsFragment extends Fragment {
             float newTextScale = 1.0f;
             if (isChecked) {
                 newTextScale = 1.4f;
-                textSize.setText("Shrink text");
                 wasSizeChecked = true;
             } else {
-                textSize.setText("Enlarge text");
                 wasSizeChecked = false;
             }
             updateThemeConfiguration(newTextScale);
+
+            getActivity().recreate();
+
+        }
+    }
+
+    private void setSwitchState() {
+        textSize.setChecked(wasSizeChecked);
+        if (wasSizeChecked) {
+            textSize.setText("Shrink text");
         }
     }
     private SizeListener sizeListener = new SizeListener();
