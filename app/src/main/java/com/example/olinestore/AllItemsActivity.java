@@ -2,6 +2,8 @@ package com.example.olinestore;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentContainerView;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,13 +35,12 @@ public class AllItemsActivity extends AppCompatActivity {
     private ArrayList<ListItem> displayedItemList;
     ItemsAdapter itemsAdapter;
 
-    ArrayAdapter<String> categoriesAdapter;
-    private Spinner categoriesSpinner;
+    public ArrayAdapter<String> categoriesAdapter;
     private ArrayList<String> categories;
-    private String category = "Shoes";
+    public String category = "Shoes";
 
     private Map<String, String[]> categoriesSizes;
-    private ListView itemsListView;
+    public ListView itemsListView;
     private TextView totalAmountTextView;
     private Button nextPageButton;
     private Button previousPageButton;
@@ -48,6 +49,8 @@ public class AllItemsActivity extends AppCompatActivity {
     private EditText searchItemEditText;
     private Button filterButton;
     private FragmentContainerView filtersFragment;
+    public Boolean isFilterFragmentShown = false;
+    public MutableLiveData<Boolean>visibilityListener = new MutableLiveData<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +59,28 @@ public class AllItemsActivity extends AppCompatActivity {
 //        categoriesSpinner = findViewById(R.id.categoriesSpinner);
         filtersFragment = findViewById(R.id.filtersFragment);
         filterButton = findViewById(R.id.filtersButton);
+
+
+        visibilityListener.setValue(isFilterFragmentShown);
+        visibilityListener.observe(AllItemsActivity.this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                Toast.makeText(AllItemsActivity.this, String.valueOf(isFilterFragmentShown), Toast.LENGTH_SHORT).show();
+                if(!visibilityListener.getValue()) {
+                    itemsListView.setVisibility(View.VISIBLE);
+                    filterButton.setVisibility(View.VISIBLE);
+                    filtersFragment.setVisibility(View.INVISIBLE);
+                } else{
+                    itemsListView.setVisibility(View.INVISIBLE);
+                    filterButton.setVisibility(View.INVISIBLE);
+                    filtersFragment.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         filterButton.setOnClickListener(v->{
-            if(itemsListView.getVisibility() == View.INVISIBLE){
-                itemsListView.setVisibility(View.VISIBLE);
-                filtersFragment.setVisibility(View.INVISIBLE);
-            }
-            else {
-                itemsListView.setVisibility(View.INVISIBLE);
-                filtersFragment.setVisibility(View.VISIBLE);
-            }
+            isFilterFragmentShown = true;
+            visibilityListener.setValue(isFilterFragmentShown);
+            System.out.println(isFilterFragmentShown);
         });
         firestore = FirebaseFirestore.getInstance();
         categories = new ArrayList<>();
@@ -155,7 +171,7 @@ public class AllItemsActivity extends AppCompatActivity {
         }
     }
 
-    private void getDataFromFirestore() {
+    public void getDataFromFirestore() {
         itemList.clear();
         firestore.collection(category)
                 .get()
@@ -186,7 +202,7 @@ public class AllItemsActivity extends AppCompatActivity {
                 });
     }
 
-    private void getCategoriesFromStorage() {
+    public void getCategoriesFromStorage() {
         firestore.collection("categories").get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
@@ -202,28 +218,11 @@ public class AllItemsActivity extends AppCompatActivity {
                 categoriesAdapter = new ArrayAdapter<>(
                         this, android.R.layout.simple_spinner_item, categories
                 );
-//                handleSpinnerActions();
+                categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             }
         });
     }
 
-//    private void handleSpinnerActions() {
-//        categoriesSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                category = parent.getItemAtPosition(position).toString();
-//                Toast.makeText(AllItemsActivity.this,  category, Toast.LENGTH_SHORT).show();
-//                getDataFromFirestore();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-//        categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        categoriesSpinner.setAdapter(categoriesAdapter);
-//    }
 
 }
 
