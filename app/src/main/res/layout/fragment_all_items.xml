@@ -32,43 +32,54 @@
             android:id="@+id/pageNumberTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="24dp"
             android:text=""
+<<<<<<< Updated upstream
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:contentDescription="Page of items"/>
+=======
+            android:textAlignment="center"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/nextPageButton"
+            app:layout_constraintStart_toEndOf="@+id/previusPageButton" />
+>>>>>>> Stashed changes
 
         <Button
             android:id="@+id/previusPageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="60dp"
             android:background="@drawable/round_arrow_back_24"
-            app:layout_constraintEnd_toStartOf="@+id/pageNumberTextView"
-            app:layout_constraintTop_toBottomOf="@id/itemsListView"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+<<<<<<< Updated upstream
             app:layout_constraintBottom_toBottomOf="parent"
             android:contentDescription="Return to previous page"/>
+=======
+            app:layout_constraintTop_toBottomOf="@id/itemsListView" />
+>>>>>>> Stashed changes
 
         <Button
             android:id="@+id/nextPageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/baseline_arrow_forward_24"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+<<<<<<< Updated upstream
             app:layout_constraintStart_toEndOf="@+id/pageNumberTextView"
             app:layout_constraintTop_toBottomOf="@id/itemsListView"
             app:layout_constraintBottom_toBottomOf="parent"
             android:contentDescription="Go to next page"/>
+=======
+            app:layout_constraintTop_toBottomOf="@id/itemsListView" />
+>>>>>>> Stashed changes
 
 
         <Button
@@ -80,6 +91,7 @@
             android:text="Filters"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+<<<<<<< Updated upstream
             app:layout_constraintTop_toTopOf="parent"
             android:contentDescription="Add filters"/>
 
@@ -98,5 +110,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/filtersButton" />
 
+=======
+            app:layout_constraintTop_toTopOf="parent" />
+>>>>>>> Stashed changes
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

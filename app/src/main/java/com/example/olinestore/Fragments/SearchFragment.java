@@ -66,7 +66,7 @@ public class SearchFragment extends Fragment {
 
                     AllItemsFragment fragment = new AllItemsFragment();
                     FragmentTransaction transaction = fm.beginTransaction();
-                    transaction.replace(R.id.SearchFragmentContainer, fragment);
+                    transaction.replace(R.id.SearchFragmentContainer, fragment, "ALL_ITEMS_FRAGMENT");
                     transaction.commitNow();
                 } catch (ClassCastException e) {
                 }
@@ -110,6 +110,9 @@ public class SearchFragment extends Fragment {
         }
     }
 
+    public void showXD(){
+        System.out.println("xd");
+    }
 
 
     public void setHomeFragment() {

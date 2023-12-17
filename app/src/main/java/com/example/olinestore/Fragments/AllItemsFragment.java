@@ -1,5 +1,6 @@
 package com.example.olinestore.Fragments;
 
+import com.example.olinestore.FiltersActivity;
 import com.example.olinestore.ListItem;
 import com.example.olinestore.ItemsAdapter;
 
@@ -43,26 +44,27 @@ import java.util.Map;
 public class AllItemsFragment extends Fragment {
     private FirebaseFirestore firestore;
     private ArrayList<ListItem> itemList;
-    private ArrayList<ListItem> filteredItemList;
+    public  ArrayList<ListItem> filteredItemList;
     private ArrayList<ListItem> displayedItemList;
     ItemsAdapter itemsAdapter;
 
-    public ArrayAdapter<String> categoriesAdapter;
+//    public ArrayAdapter<String> categoriesAdapter;
     private ArrayList<String> categories;
-//    public String category = "Shoes";
+    public String category;
 
     private Map<String, String[]> categoriesSizes;
     public ListView itemsListView;
     private TextView totalAmountTextView;
     private Button nextPageButton;
     private Button previousPageButton;
-    private int numberOfItems = 10;
+    public  Integer numberOfItems = 10;
     private int pageNumber = 0;
     private EditText searchItemEditText;
     private Button filterButton;
-    private FragmentContainerView filtersFragment;
-    public Boolean isFilterFragmentShown = false;
-    public MutableLiveData<Boolean> visibilityListener =
+
+    public static MutableLiveData<Integer> itemsOnPageListener =
+            new MutableLiveData<>();
+    public static MutableLiveData<String> categoryListener =
             new MutableLiveData<>();
 
     @Override
@@ -82,46 +84,13 @@ public class AllItemsFragment extends Fragment {
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        filtersFragment = view.findViewById(R.id.filtersFragment);
         filterButton = view.findViewById(R.id.filtersButton);
 
-
-        visibilityListener.setValue(isFilterFragmentShown);
-        visibilityListener.observe(AllItemsFragment.this,
-                                   new Observer<Boolean>() {
-                                       @Override
-                                       public void onChanged(Boolean aBoolean) {
-                                           Toast.makeText(getContext(),
-                                                          String.valueOf(
-                                                                  isFilterFragmentShown),
-                                                          Toast.LENGTH_SHORT)
-                                                   .show();
-                                           if (!visibilityListener.getValue()) {
-                                               itemsListView.setVisibility(
-                                                       View.VISIBLE);
-                                               filterButton.setVisibility(
-                                                       View.VISIBLE);
-                                               filtersFragment.setVisibility(
-                                                       View.INVISIBLE);
-                                           } else {
-                                               itemsListView.setVisibility(
-                                                       View.INVISIBLE);
-                                               filterButton.setVisibility(
-                                                       View.INVISIBLE);
-                                               filtersFragment.setVisibility(
-                                                       View.VISIBLE);
-                                           }
-                                       }
-                                   });
-        filterButton.setOnClickListener(v -> {
-            isFilterFragmentShown = true;
-            visibilityListener.setValue(isFilterFragmentShown);
-        });
         firestore = FirebaseFirestore.getInstance();
         categories = new ArrayList<>();
+        categories.add("-");
         categoriesSizes = new HashMap<>();
         getAllItemsAndCategoriesFromStorage();
-
 
         itemsListView = view.findViewById(R.id.itemsListView);
         nextPageButton = view.findViewById(R.id.nextPageButton);
@@ -137,6 +106,15 @@ public class AllItemsFragment extends Fragment {
 //        getDataFromFirestore();
         itemsAdapter = new ItemsAdapter(getContext(), displayedItemList);
         itemsListView.setAdapter(itemsAdapter);
+
+        filterButton.setOnClickListener(v -> {
+            System.out.println(categories.get(0));
+            Intent intent = new Intent(getActivity(), FiltersActivity.class);
+            intent.putStringArrayListExtra("categories", categories);
+            intent.putExtra("itemsOnPage", numberOfItems);
+            intent.putExtra("filteredItems", filteredItemList);
+            startActivity(intent);
+        });
 
         nextPageButton.setOnClickListener(v -> {
             handleDisplayedItem("next");
@@ -167,23 +145,10 @@ public class AllItemsFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
-                filteredItemList.clear();
+//                filteredItemList.clear();
                 if (s.length() > 0) {
-                    for (ListItem item : itemList) {
-                        if (item.getName().toLowerCase()
-                                .contains(s.toString().toLowerCase())) {
-                            filteredItemList.add(item);
-                        } else if (item.getBrand().toLowerCase()
-                                .contains(s.toString().toLowerCase())) {
-                            filteredItemList.add(item);
-                        }
-                    }
-                } else {
-                    filteredItemList.addAll(itemList);
-                    System.out.println(itemList.get(0).getName());
+                    applyFilters(s.toString());
                 }
-                showSpecifiedNumberOfItems();
-
             }
 
             @Override
@@ -191,9 +156,51 @@ public class AllItemsFragment extends Fragment {
 
             }
         });
+
+
+        itemsOnPageListener.setValue(numberOfItems);
+        itemsOnPageListener.observe(AllItemsFragment.this,
+                new Observer<Integer>() {
+                    @Override
+                    public void onChanged(Integer aInteger) {
+                        numberOfItems = itemsOnPageListener.getValue();
+                        showSpecifiedNumberOfItems();
+                    }
+                });
+
+        categoryListener.setValue(category);
+        categoryListener.observe(AllItemsFragment.this,
+                new Observer<String>() {
+                    @Override
+                    public void onChanged(String aString) {
+                        category = categoryListener.getValue();
+//                        filteredItemList.clear();
+//                        for (ListItem item : itemList) {
+//                            if (item.getCategories().equals(category)) {
+//                                filteredItemList.add(item);
+//                            }
+//                        }
+//                        showSpecifiedNumberOfItems();
+                        System.out.println("change");
+                        applyFilters(searchItemEditText.getEditableText().toString());
+                    }
+                });
     }
 
     ;
+    private void applyFilters(String s){
+        filteredItemList.clear();
+        for (ListItem item : itemList) {
+            boolean condition1 = category.isEmpty() || category.equals("-") || item.getCategories().equals(category);
+            boolean condition2 = item.getName().toLowerCase()
+                    .contains(s.toLowerCase()) || item.getBrand().toLowerCase()
+                    .contains(s.toLowerCase());
+            if (condition1 && condition2) {
+                filteredItemList.add(item);
+            }
+        }
+        showSpecifiedNumberOfItems();
+    }
 
     private void showSpecifiedNumberOfItems() {
         displayedItemList.clear();
@@ -203,7 +210,7 @@ public class AllItemsFragment extends Fragment {
             displayedItemList.add(filteredItemList.get(i));
         }
         itemsAdapter.notifyDataSetChanged();
-        totalAmountTextView.setText("Page " + String.valueOf(pageNumber + 1));
+        totalAmountTextView.setText("Page " + (pageNumber + 1) + "\n(" + numberOfItems + " items on page)");
     }
 
     private void handleDisplayedItem(String mode) {
@@ -245,7 +252,7 @@ public class AllItemsFragment extends Fragment {
         String currency = (String) document.getString("currency");
         String path = document.getString("img");
         ListItem item = new ListItem(name, brand, colors, price, currency, path,
-                                     category, categoriesSizes.get(category));
+                category, categoriesSizes.get(category));
         itemList.add(item);
     }
 
@@ -265,11 +272,11 @@ public class AllItemsFragment extends Fragment {
                     }
                 }
                 getAllItemsFromStorage();
-                categoriesAdapter = new ArrayAdapter<>(getContext(),
-                                                       android.R.layout.simple_spinner_item,
-                                                       categories);
-                categoriesAdapter.setDropDownViewResource(
-                        android.R.layout.simple_spinner_dropdown_item);
+//                categoriesAdapter = new ArrayAdapter<>(getContext(),
+//                                                       android.R.layout.simple_spinner_item,
+//                                                       categories);
+//                categoriesAdapter.setDropDownViewResource(
+//                        android.R.layout.simple_spinner_dropdown_item);
             }
         });
     }
