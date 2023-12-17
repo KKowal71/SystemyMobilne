@@ -63,7 +63,7 @@
                             android:layout_height="wrap_content"
                             android:text="Home"
                             android:textAlignment="center"
-                            android:textColor="#676767"
+                            android:textColor="@color/black"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -87,7 +87,7 @@
                             android:layout_height="wrap_content"
                             android:text="Account"
                             android:textAlignment="center"
-                            android:textColor="#676767"
+                            android:textColor="@color/black"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -108,7 +108,7 @@
                             android:layout_height="wrap_content"
                             android:text="Home"
                             android:textAlignment="center"
-                            android:textColor="#676767"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:visibility="invisible" />
                     </LinearLayout>
@@ -133,7 +133,7 @@
                             android:layout_height="wrap_content"
                             android:text="History"
                             android:textAlignment="center"
-                            android:textColor="#676767"
+                            android:textColor="@color/black"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -159,7 +159,7 @@
                             android:layout_height="wrap_content"
                             android:text="Settings"
                             android:textAlignment="center"
-                            android:textColor="#676767"
+                            android:textColor="@color/black"
                             android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -172,11 +172,10 @@
             android:id="@+id/cartButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#5eff86"
+            android:backgroundTint="@color/green"
             android:contentDescription="@string/app_name"
             android:elevation="3dp"
             android:src="@drawable/baseline_shopping_bag_24"
-            app:backgroundTint="#ff5e00"
             app:layout_anchor="@id/app_bar">
 
 

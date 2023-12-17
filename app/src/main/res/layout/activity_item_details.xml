@@ -107,7 +107,6 @@
            android:layout_height="34dp"
            android:layout_marginStart="6dp"
            android:layout_marginBottom="8dp"
-           android:background="#00FFFFFF"
            app:layout_constraintBottom_toTopOf="@+id/itemDetailsImage"
            app:layout_constraintStart_toStartOf="parent"
            app:srcCompat="@drawable/round_arrow_back_24" />
@@ -119,7 +118,7 @@
            android:layout_marginStart="32dp"
            android:layout_marginTop="8dp"
            android:layout_marginEnd="32dp"
-           android:background="#FFFFFF"
+           android:background="@color/white"
            app:layout_constraintEnd_toStartOf="@+id/addToBagButton"
            app:layout_constraintStart_toEndOf="@+id/itemDetailsPrice"
            app:layout_constraintTop_toBottomOf="@+id/itemDetailsName" />

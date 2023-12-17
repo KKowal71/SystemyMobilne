@@ -39,7 +39,7 @@
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="16dp"
                         android:text="eShopXpress"
-                        android:textColor="#00ffff"
+                        android:textColor="@color/purple_700"
                         android:textSize="32sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"

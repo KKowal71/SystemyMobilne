@@ -50,15 +50,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         settingsImage.setOnClickListener(v -> {
-            if (firebaseAuth.getUid() != null) {
-                SettingsFragment fragment = new SettingsFragment();
-                FragmentTransaction transaction = fm.beginTransaction();
-                transaction.replace(R.id.ShownFragment, fragment);
-                transaction.commitNow();
-            } else {
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-            }
-
+            SettingsFragment fragment = new SettingsFragment();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.ShownFragment, fragment);
+            transaction.commitNow();
         });
 
         historyImage.setOnClickListener(v -> {
@@ -100,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
             transaction.commitNow();
         }
     }
+
 
 
     private FirebaseAuth firebaseAuth;
