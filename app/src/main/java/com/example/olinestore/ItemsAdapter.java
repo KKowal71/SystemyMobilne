@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,6 +35,7 @@ import java.util.List;
 public class ItemsAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<ListItem> dataList;
+    private ArrayList<ListItem> filteredDataList;
     private boolean isBagView;
     private TextView totalAmount;
 
@@ -137,6 +139,8 @@ public class ItemsAdapter extends BaseAdapter {
         String formattedValue = decimalFormat.format(bag.getTotalAmount());
         totalAmount.setText(formattedValue + " USD");
     }
+
+
 
 
 }
