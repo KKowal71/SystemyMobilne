@@ -20,7 +20,8 @@
             android:text="Cancel"
             app:layout_constraintEnd_toStartOf="@id/ApplyButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/City" />
+            app:layout_constraintTop_toBottomOf="@+id/City"
+            android:contentDescription="Cancell setting new delivery address"/>
 
         <Button
             android:id="@+id/ApplyButton"
@@ -31,7 +32,8 @@
             android:text="Apply"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/CancelButton"
-            app:layout_constraintTop_toBottomOf="@+id/City" />
+            app:layout_constraintTop_toBottomOf="@+id/City"
+            android:contentDescription="Set new delivery address"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/StreetAndNumber"
@@ -47,7 +49,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Street an Number" />
+                android:hint="Street an Number"
+                android:contentDescription="Insert street and number"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -64,7 +67,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Postal code (XX-XXX)" />
+                android:hint="Postal code (XX-XXX)"
+                android:contentDescription="Insert postal code in format - 2 numbers, dash, 3 numbers"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -76,12 +80,14 @@
             android:layout_marginEnd="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/PostalCode">
+            app:layout_constraintTop_toBottomOf="@+id/PostalCode"
+           >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="City" />
+                android:hint="City"
+                android:contentDescription="Insert city"/>
 
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

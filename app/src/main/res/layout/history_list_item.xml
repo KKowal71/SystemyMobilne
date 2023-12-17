@@ -50,7 +50,8 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/Datetext2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="Date of order"/>
 
     <TextView
         android:id="@+id/ItemCount"
@@ -61,7 +62,8 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ItemCount2"
-        app:layout_constraintTop_toBottomOf="@+id/Datetext" />
+        app:layout_constraintTop_toBottomOf="@+id/Datetext"
+        android:contentDescription="Number of items ordered"/>
 
     <TextView
         android:id="@+id/PricePayed"
@@ -72,7 +74,9 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/PricePayed2"
-        app:layout_constraintTop_toBottomOf="@+id/ItemCount" />
+        app:layout_constraintTop_toBottomOf="@+id/ItemCount"
+
+        android:contentDescription="Order price payed"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -43,7 +43,8 @@
                         android:textSize="32sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
 
                     <EditText
                         android:id="@+id/editTextText"
@@ -64,7 +65,8 @@
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/welcomeTextView" />
+                        app:layout_constraintTop_toBottomOf="@+id/welcomeTextView"
+                        android:contentDescription="Insert what are you looking for"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

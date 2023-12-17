@@ -16,7 +16,8 @@
         android:layout_marginEnd="16dp"
         android:background="@color/teal_200"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="item image"/>
 
     <TextView
         android:id="@+id/nameTextView"
@@ -29,7 +30,8 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/itemImageView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="Item name"/>
 
     <TextView
         android:id="@+id/brandTextView"
@@ -41,7 +43,8 @@
         android:text="TextView"
         app:layout_constraintEnd_toStartOf="@+id/itemImageView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/nameTextView"
+        android:contentDescription="Item brand"/>
 
     <TextView
         android:id="@+id/priceTextView"
@@ -52,7 +55,8 @@
         android:text="TextView"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/brandTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/brandTextView"
+        android:contentDescription="Item price"/>
 
     <TextView
         android:id="@+id/sizeTextView"
@@ -64,7 +68,8 @@
         app:layout_constraintEnd_toStartOf="@+id/itemImageView"
         app:layout_constraintStart_toEndOf="@+id/priceTextView"
         app:layout_constraintTop_toBottomOf="@+id/brandTextView"
-        tools:visibility="invisible" />
+        tools:visibility="invisible"
+        android:contentDescription="Item size"/>
 
     <TextView
         android:id="@+id/amountTextNumber"
@@ -75,7 +80,8 @@
         android:ems="10"
         android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/removeAmountButton"
-        app:layout_constraintTop_toBottomOf="@+id/priceTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/priceTextView"
+        android:contentDescription="Item amount"/>
 
     <ImageButton
         android:id="@+id/addAmountButton"
@@ -86,7 +92,8 @@
         android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/amountTextNumber"
         app:layout_constraintTop_toBottomOf="@+id/priceTextView"
-        app:srcCompat="@drawable/baseline_arrow_upward_24" />
+        app:srcCompat="@drawable/baseline_arrow_upward_24"
+        android:contentDescription="Add one item this kind"/>
 
     <ImageButton
         android:id="@+id/removeAmountButton"
@@ -97,7 +104,8 @@
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/priceTextView"
-        app:srcCompat="@drawable/baseline_arrow_downward_24" />
+        app:srcCompat="@drawable/baseline_arrow_downward_24"
+        android:contentDescription="Delete one item this kind"/>
 
     <ImageButton
         android:id="@+id/removeItemButton"
@@ -108,6 +116,7 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/priceTextView"
-        app:srcCompat="@drawable/baseline_delete_24" />
+        app:srcCompat="@drawable/baseline_delete_24"
+        android:contentDescription="Delete from bag"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

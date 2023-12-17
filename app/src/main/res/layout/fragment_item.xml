@@ -20,7 +20,8 @@
             android:src="@drawable/baseline_open_eye_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="Item image"/>
 
         <TextView
             android:id="@+id/fragmentItemName"
@@ -33,6 +34,7 @@
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragmentItemImageView" />
+            app:layout_constraintTop_toBottomOf="@+id/fragmentItemImageView"
+            android:contentDescription="Item name"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

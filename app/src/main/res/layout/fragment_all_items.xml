@@ -23,7 +23,8 @@
             app:layout_constraintBottom_toTopOf="@id/pageNumberTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/filtersButton">
+            app:layout_constraintTop_toBottomOf="@id/filtersButton"
+            android:contentDescription="Items to buy">
 
         </ListView>
 
@@ -38,7 +39,8 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="Page of items"/>
 
         <Button
             android:id="@+id/previusPageButton"
@@ -51,7 +53,8 @@
             app:layout_constraintEnd_toStartOf="@+id/pageNumberTextView"
             app:layout_constraintTop_toBottomOf="@id/itemsListView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="Return to previous page"/>
 
         <Button
             android:id="@+id/nextPageButton"
@@ -64,7 +67,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/pageNumberTextView"
             app:layout_constraintTop_toBottomOf="@id/itemsListView"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="Go to next page"/>
 
 
         <Button
@@ -76,7 +80,8 @@
             android:text="Filters"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="Add filters"/>
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/filtersFragment"

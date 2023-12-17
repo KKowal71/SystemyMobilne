@@ -50,7 +50,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.257"
                     app:layout_constraintStart_toEndOf="@+id/userNameTV"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
 
                 <TextView
                     android:id="@+id/textView4"
@@ -62,7 +63,8 @@
                     android:textSize="25sp"
                     app:layout_constraintBottom_toTopOf="@+id/depositButton"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/userNameTV" />
+                    app:layout_constraintTop_toBottomOf="@+id/userNameTV"
+                    />
 
                 <TextView
                     android:id="@+id/balanceTV"
@@ -75,7 +77,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.144"
                     app:layout_constraintStart_toEndOf="@+id/textView4"
-                    app:layout_constraintTop_toBottomOf="@+id/userSurnameTV" />
+                    app:layout_constraintTop_toBottomOf="@+id/userSurnameTV"
+                    android:contentDescription="Your balance"/>
 
                 <Button
                     android:id="@+id/depositButton"
@@ -86,7 +89,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.498"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/balanceTV" />
+                    app:layout_constraintTop_toBottomOf="@+id/balanceTV"
+                    android:contentDescription="Deposit funds"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>

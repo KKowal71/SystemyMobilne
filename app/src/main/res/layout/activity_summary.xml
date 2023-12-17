@@ -31,7 +31,8 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="Confirm your payment"/>
 
     <TextView
         android:id="@+id/userInfoTextView"
@@ -41,7 +42,8 @@
         android:layout_marginTop="150dp"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/summaryHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/summaryHeader"
+        android:contentDescription="User name"/>
 
     <TextView
         android:id="@+id/userAdressInfoTextView"
@@ -51,7 +53,8 @@
         android:layout_marginTop="24dp"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userInfoTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/userInfoTextView"
+        android:contentDescription="User address"/>
 
     <TextView
         android:id="@+id/itemsCountTextView"
@@ -61,7 +64,8 @@
         android:layout_marginTop="24dp"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userAdressInfoTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/userAdressInfoTextView"
+        android:contentDescription="User item count"/>
 
     <TextView
         android:id="@+id/balanceAfterPurchaseTV"
@@ -71,7 +75,8 @@
         android:layout_marginTop="24dp"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itemsCountTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/itemsCountTextView"
+        android:contentDescription="Balance after purchase"/>
 
     <Button
         android:id="@+id/goToUserPanelButton"
@@ -82,7 +87,8 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/summaryHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/summaryHeader"
+        android:contentDescription="Go to user panel and set delivery address"/>
 
     <TextView
         android:id="@+id/totalAmountTV"
@@ -98,6 +104,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/balanceAfterPurchaseTV"
-        app:layout_constraintVertical_bias="0.571" />
+        app:layout_constraintVertical_bias="0.571"
+        android:contentDescription="Total amount to pay"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

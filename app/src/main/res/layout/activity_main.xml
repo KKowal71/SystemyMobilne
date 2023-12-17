@@ -65,7 +65,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            app:srcCompat="@drawable/baseline_home_24" />
+                            app:srcCompat="@drawable/baseline_home_24"
+                            android:contentDescription="Go to home page"/>
 
                         <TextView
                             android:id="@+id/homeBtnTV"
@@ -82,14 +83,16 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.2"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        >
 
                         <ImageView
                             android:id="@+id/accountInfoImage"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="0.2"
-                            app:srcCompat="@drawable/baseline_person_24" />
+                            app:srcCompat="@drawable/baseline_person_24"
+                            android:contentDescription="Go to account page"/>
 
                         <TextView
                             android:id="@+id/accountInfoTV"
@@ -111,7 +114,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.2"
-                            android:visibility="invisible" />
+                            android:visibility="invisible"
+                            />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -135,7 +139,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.2"
-                            app:srcCompat="@drawable/baseline_history_24" />
+                            app:srcCompat="@drawable/baseline_history_24"
+                            android:contentDescription="Go to order history page"/>
 
                         <TextView
                             android:id="@+id/historyTV"
@@ -160,7 +165,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.2"
-                            app:srcCompat="@drawable/baseline_settings_24" />
+                            app:srcCompat="@drawable/baseline_settings_24"
+                            android:contentDescription="Go to setting page"/>
 
 
                         <TextView
@@ -183,7 +189,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/green"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="Go to bag"
             android:elevation="3dp"
             android:src="@drawable/baseline_shopping_bag_24"
             app:layout_anchor="@id/app_bar">

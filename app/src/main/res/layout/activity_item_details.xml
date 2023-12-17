@@ -22,7 +22,8 @@
            app:layout_constraintEnd_toEndOf="parent"
            app:layout_constraintStart_toStartOf="parent"
            app:layout_constraintTop_toTopOf="parent"
-           tools:srcCompat="@tools:sample/avatars" />
+           tools:srcCompat="@tools:sample/avatars"
+           android:contentDescription="Picture of the item"/>
 
        <TextView
            android:id="@+id/itemDetailsName"
@@ -35,7 +36,8 @@
            android:textSize="34sp"
            app:layout_constraintEnd_toEndOf="parent"
            app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toBottomOf="@+id/itemDetailsImage" />
+           app:layout_constraintTop_toBottomOf="@+id/itemDetailsImage"
+           android:contentDescription="Item name"/>
 
        <TextView
            android:id="@+id/itemDetailsPrice"
@@ -46,7 +48,8 @@
            android:text="TextView"
            android:textSize="24sp"
            app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toBottomOf="@+id/itemDetailsName" />
+           app:layout_constraintTop_toBottomOf="@+id/itemDetailsName"
+           android:contentDescription="Price"/>
 
        <Button
            android:id="@+id/addToBagButton"
@@ -56,7 +59,8 @@
            android:layout_marginEnd="28dp"
            android:text="Add to bag"
            app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintTop_toBottomOf="@+id/itemDetailsName" />
+           app:layout_constraintTop_toBottomOf="@+id/itemDetailsName"
+           android:contentDescription="Add this item bag"/>
 
        <TextView
            android:id="@+id/colorsDetailsTextView"
@@ -68,7 +72,8 @@
            android:text="Colors"
            app:layout_constraintEnd_toEndOf="parent"
            app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toBottomOf="@+id/itemDetailsPrice" />
+           app:layout_constraintTop_toBottomOf="@+id/itemDetailsPrice"
+           android:contentDescription="Available colors of item"/>
 
        <HorizontalScrollView
            android:id="@+id/colorsContainer"
@@ -99,7 +104,8 @@
            app:layout_constraintEnd_toEndOf="parent"
            app:layout_constraintHorizontal_bias="0.0"
            app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toBottomOf="@+id/colorsContainer" />
+           app:layout_constraintTop_toBottomOf="@+id/colorsContainer"
+           android:contentDescription="Breand of the item"/>
 
        <ImageButton
            android:id="@+id/backButton"
@@ -109,7 +115,8 @@
            android:layout_marginBottom="8dp"
            app:layout_constraintBottom_toTopOf="@+id/itemDetailsImage"
            app:layout_constraintStart_toStartOf="parent"
-           app:srcCompat="@drawable/round_arrow_back_24" />
+           app:srcCompat="@drawable/round_arrow_back_24"
+           android:contentDescription="Return to browssing items"/>
 
        <Spinner
            android:id="@+id/sizeSpinner"
@@ -121,7 +128,8 @@
            android:background="@color/white"
            app:layout_constraintEnd_toStartOf="@+id/addToBagButton"
            app:layout_constraintStart_toEndOf="@+id/itemDetailsPrice"
-           app:layout_constraintTop_toBottomOf="@+id/itemDetailsName" />
+           app:layout_constraintTop_toBottomOf="@+id/itemDetailsName"
+           android:contentDescription="Choose size"/>
 
    </androidx.constraintlayout.widget.ConstraintLayout>
 

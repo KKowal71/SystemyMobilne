@@ -15,25 +15,29 @@
         android:id="@+id/emailField"
         android:layout_width="300dp"
         android:layout_height="48dp"
-        android:hint="email" />
+        android:hint="email"
+        android:contentDescription="enter email"/>
 
     <EditText
         android:id="@+id/nameField"
         android:layout_width="300dp"
         android:layout_height="48dp"
-        android:hint="name" />
+        android:hint="name"
+        android:contentDescription="enter name"/>
 
     <EditText
         android:id="@+id/surnameField"
         android:layout_width="300dp"
         android:layout_height="48dp"
-        android:hint="surname" />
+        android:hint="surname"
+        android:contentDescription="enter surname"/>
     <EditText
         android:id="@+id/birthdayField"
         android:inputType="date"
         android:layout_width="300dp"
         android:layout_height="48dp"
-        android:hint="date of birth" />
+        android:hint="date of birth"
+        android:contentDescription="enter birth date"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -44,6 +48,7 @@
             android:layout_height="48dp"
             android:hint="password"
             android:inputType="textPassword"
+            android:contentDescription="enter password"
              />
 
         <ImageView
@@ -63,7 +68,9 @@
             android:layout_width="280dp"
             android:layout_height="48dp"
             android:inputType="textPassword"
-            android:hint="confirm password" />
+            android:hint="confirm password"
+            android:contentDescription="confirm password"/>
+
 
         <ImageView
             android:id="@+id/closedEyeImage2"
