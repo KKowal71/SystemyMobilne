@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,7 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         langSpinner = view.findViewById(R.id.LanguageSpinner);
         textSize = view.findViewById(R.id.TextSize);
-        accMode = view.findViewById(R.id.AccessibilityMode);
+
 
         String[] langs = {"English", "Polish", "Espanol"};
         ArrayAdapter<CharSequence> langSpinnerAdapt = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, langs);
@@ -53,13 +54,6 @@ public class SettingsFragment extends Fragment {
 
         textSize.setChecked(wasSizeChecked);
 
-        accMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                accMode.setText("Turn off");
-            } else {
-                accMode.setText("Turn on");
-            }
-        });
     }
 
 
@@ -96,9 +90,7 @@ public class SettingsFragment extends Fragment {
 
     private Switch textSize ;
 
-    private Switch accMode;
     private Spinner langSpinner;
 
-    private Resources.Theme theme;
     private static boolean wasSizeChecked = false;
 }

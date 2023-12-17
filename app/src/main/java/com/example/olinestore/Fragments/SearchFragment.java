@@ -78,15 +78,11 @@ public class SearchFragment extends Fragment {
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.SearchFragmentContainer, fragment);
             transaction.commitNow();
-
-
-            System.out.println("ADSAda");
         } catch (ClassCastException e) {
             HomeFragment fragment = new HomeFragment();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.SearchFragmentContainer, fragment);
             transaction.commitNow();
-            System.out.println("EEEEE");
         }
     }
 

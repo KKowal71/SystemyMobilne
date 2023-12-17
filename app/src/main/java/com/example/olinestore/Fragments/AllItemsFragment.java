@@ -96,7 +96,6 @@ public class AllItemsFragment extends Fragment {
         filterButton.setOnClickListener(v->{
             isFilterFragmentShown = true;
             visibilityListener.setValue(isFilterFragmentShown);
-            System.out.println(isFilterFragmentShown);
         });
         firestore = FirebaseFirestore.getInstance();
         categories = new ArrayList<>();
@@ -202,16 +201,12 @@ public class AllItemsFragment extends Fragment {
                                 ListItem item = new ListItem(name, brand, colors, price, currency, path, categoriesSizes.get(category));
                                 itemList.add(item);
                             } catch (NumberFormatException e) {
-                                System.out.println(e);
                             }
                         }
                         pageNumber = 0;
                         filteredItemList.addAll(itemList);
                         showSpecifiedNumberOfItems();
                         itemsAdapter.notifyDataSetChanged();
-//                        totalAmountTextView.setText(String.valueOf(itemList.size()) + " products");
-                    } else {
-                        System.out.println("error");
                     }
                 });
     }
@@ -234,6 +229,10 @@ public class AllItemsFragment extends Fragment {
                 categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             }
         });
+    }
+
+    public ArrayList<ListItem> getItemList() {
+        return itemList;
     }
 
 
