@@ -68,9 +68,9 @@ public class HistoryFragment extends Fragment {
                         for (DocumentSnapshot doc: documents) {
                             if (doc.getString("uID").equals(uid)) {
                                 String date = doc.getString("date");
-                                String nrOfItems = doc.getString("nrOfItems");
+                                int nrOfItems = doc.getDouble("nrOfItems").intValue();
                                 String orderPrice = doc.getString("orderPrice");
-                                String[] tab = {date, nrOfItems, orderPrice};
+                                String[] tab = {date, String.valueOf(nrOfItems), orderPrice};
                                 historyItemList.add(tab);
                             }
                         }

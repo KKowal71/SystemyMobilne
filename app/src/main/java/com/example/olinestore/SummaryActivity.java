@@ -72,7 +72,10 @@ public class SummaryActivity extends AppCompatActivity {
         data.put("uID", firebaseAuth.getUid());
         data.put("date", new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
         data.put("nrOfItems", itemsCount);
-        data.put("orderPrice", totalAmount);
+        DecimalFormat decimalFormat = new DecimalFormat("####.##");
+        String formattedValue = decimalFormat.format(totalAmount);
+
+        data.put("orderPrice", formattedValue);
         firestore
                 .collection("History")
                 .add(data);
@@ -89,10 +92,10 @@ public class SummaryActivity extends AppCompatActivity {
 
                                 DocumentSnapshot document = task.getResult();
                                 if (document.exists()) {
-                                    float userBalance = document.getDouble("balance").floatValue();
+                                    float userBalance = Float.parseFloat(document.getString("balance"));
                                     userInfoTV.setText(document.getString("name") + " " + document.getString("surname"));
                                     itemsCountTV.setText("Number of item: " + itemsCount);
-                                    DecimalFormat decimalFormat = new DecimalFormat("####.####");
+                                    DecimalFormat decimalFormat = new DecimalFormat("####.##");
                                     String formattedValue = decimalFormat.format(userBalance - totalAmount);
                                     balanceAfterPurchaseTV.setText("Balance after purchase: " + formattedValue);
                                     formattedValue = decimalFormat.format(totalAmount);
@@ -130,7 +133,6 @@ public class SummaryActivity extends AppCompatActivity {
                                         Double newBalance = userBalance;
                                         newBalance -= totalAmount;
                                         setUserBalance(Uid, newBalance);
-                                        System.out.println(newBalance);
                                     }
                                 }
                             }
@@ -138,10 +140,12 @@ public class SummaryActivity extends AppCompatActivity {
     }
 
     private void setUserBalance(String Uid, Double newBalance) {
+        DecimalFormat decimalFormat = new DecimalFormat("####.##");
+        String formattedValue = decimalFormat.format(newBalance);
         firestore
                 .collection("registeredUsers")
                 .document(Uid)
-                .update("balance", newBalance)
+                .update("balance", formattedValue)
                 .addOnCompleteListener(
                         task -> {
                             Bag bag = Bag.getInstance();

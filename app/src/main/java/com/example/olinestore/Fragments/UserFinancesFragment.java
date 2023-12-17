@@ -65,7 +65,7 @@ public class UserFinancesFragment extends Fragment {
                                         surname.setText(userSurname.toString());
                                     }
                                     Double userBalance =
-                                            document.getDouble("balance");
+                                            Double.parseDouble(document.getString("balance"));
                                     if (userBalance != null) {
                                         DecimalFormat decimalFormat = new DecimalFormat("####.####");
                                         String formattedValue = decimalFormat.format(userBalance);
@@ -97,7 +97,7 @@ public class UserFinancesFragment extends Fragment {
                                 DocumentSnapshot document = task.getResult();
                                 if (document.exists()) {
                                     Double userBalance =
-                                            document.getDouble("balance");
+                                            Double.parseDouble(document.getString("balance"));
                                     if (userBalance != null) {
                                         Double newBalance = userBalance;
                                         newBalance += 100;
