@@ -1,9 +1,15 @@
-package com.example.olinestore;
+package com.example.olinestore.Fragments;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -11,50 +17,66 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.olinestore.AllItemsActivity;
+import com.example.olinestore.MainActivity;
+import com.example.olinestore.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class UserPanelActivity extends AppCompatActivity {
+public class UserPanelFragment extends Fragment {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initialize();
 
-        setUpBackButtonOnClick();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_user_panel, container, false);
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initialize(view);
+
+
         setUpLogOutButtonOnClickInfo();
 
         changeAddressButton.setOnClickListener(l -> {
             switchDeliveryAddresForm();
         });
         updateUserAddress();
-    }
+    };
 
-    private void initialize() {
-        setContentView(R.layout.activity_user_panel);
+
+    private void initialize(@NonNull View view) {
+
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
-        logOutButton = (ImageView) findViewById(R.id.logOutButton);
-        backButton = findViewById(R.id.backButton);
-        addressInfoTV = findViewById(R.id.textInfo);
-        currentAddressTV = findViewById(R.id.CurrentDeliveryAddress);
-        changeAddressButton = findViewById(R.id.changeButton);
-        deliveryFragment = findViewById(R.id.fragmentContainerView3);
+        logOutButton = (ImageView) view.findViewById(R.id.logOutButton);
+        addressInfoTV = view.findViewById(R.id.textInfo);
+        currentAddressTV = view.findViewById(R.id.CurrentDeliveryAddress);
+        changeAddressButton = view.findViewById(R.id.changeButton);
+        deliveryFragment = view.findViewById(R.id.fragmentContainerView3);
 
     }
 
-    private void setUpBackButtonOnClick() {
-        backButton.setOnClickListener(v -> onBackPressed());
-    }
+
 
     private void setUpLogOutButtonOnClickInfo() {
         logOutButton.setOnClickListener(v -> {
             firebaseAuth.signOut();
-            Toast.makeText(getApplicationContext(),
+            Toast.makeText(getContext(),
                            "Logged out successfully", Toast.LENGTH_SHORT)
                     .show();
-            finish();
+            ((MainActivity) getActivity()).goToHome();
         });
     }
 
@@ -106,8 +128,6 @@ public class UserPanelActivity extends AppCompatActivity {
 
     private ImageView logOutButton;
     private FirebaseAuth firebaseAuth;
-    private ImageButton backButton;
-
     private View deliveryFragment;
 
     private Button changeAddressButton;

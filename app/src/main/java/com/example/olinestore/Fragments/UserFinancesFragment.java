@@ -113,11 +113,11 @@ public class UserFinancesFragment extends Fragment {
         fireStore
                 .collection("registeredUsers")
                 .document(Uid)
-                .update("balance", newBalance)
+                .update("balance", newBalance.toString())
                 .addOnCompleteListener(
                         task ->
                                 balance.setText(
-                                        newBalance.toString() + " USD"));
+                                        newBalance + " USD"));
     }
 
     private void init(@NonNull View view) {

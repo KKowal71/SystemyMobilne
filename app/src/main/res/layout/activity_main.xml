@@ -9,65 +9,7 @@
     tools:context=".MainActivity">
 
 
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        app:layout_constraintBottom_toBottomOf="@+id/coordinatorLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/welcomeTextView"
-                    android:layout_width="349dp"
-                    android:layout_height="46dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="16dp"
-                    android:text="Hi, "
-                    android:textColor="#00ffff"
-                    android:textSize="32sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <EditText
-                    android:id="@+id/editTextText"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="32dp"
-                    android:background="@drawable/search_background"
-                    android:drawableLeft="@android:drawable/ic_menu_search"
-                    android:ems="10"
-                    android:hint="Look up item"
-                    android:inputType="text"
-                    android:minHeight="48dp"
-                    android:paddingStart="10dp"
-                    android:textAlignment="center"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/welcomeTextView" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </LinearLayout>
-    </ScrollView>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
@@ -240,20 +182,19 @@
 
         </com.google.android.material.floatingactionbutton.FloatingActionButton>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/homeFragment"
-        android:name="com.example.olinestore.Fragments.HomeFragment"
+        android:id="@+id/ShownFragment"
+        android:name="com.example.olinestore.Fragments.SearchFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-
-        android:layout_marginTop="25dp"
 
         android:layout_marginBottom="25dp"
         app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView"
-        tools:layout="@layout/fragment_home" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_search" />
 
 
 
