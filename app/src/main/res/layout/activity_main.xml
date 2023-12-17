@@ -9,7 +9,17 @@
     tools:context=".MainActivity">
 
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/ShownFragment"
+        android:name="com.example.olinestore.Fragments.SearchFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
 
+        app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_search" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
@@ -181,19 +191,6 @@
 
         </com.google.android.material.floatingactionbutton.FloatingActionButton>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/ShownFragment"
-        android:name="com.example.olinestore.Fragments.SearchFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-
-        app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_search" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

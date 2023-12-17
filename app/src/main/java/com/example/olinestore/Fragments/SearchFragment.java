@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -55,22 +56,9 @@ public class SearchFragment extends Fragment {
                 welcomeTextView.setText("eShopXpress");
             }
         });
-
-        searchText.addTextChangedListener(new TextWatcher() {
+        searchText.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i,
-                                          int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1,
-                                      int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
+            public boolean onTouch(View view, MotionEvent motionEvent) {
                 try {
                     HomeFragment possibleFragment =
                             (HomeFragment) fm.findFragmentById(
@@ -82,8 +70,10 @@ public class SearchFragment extends Fragment {
                     transaction.commitNow();
                 } catch (ClassCastException e) {
                 }
+                return false;
             }
         });
+
     }
 
     private void setupHiTextForUser(String Uid) {
