@@ -13,10 +13,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.olinestore.R;
-import com.example.olinestore.UserPanelActivity;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.StringJoiner;
@@ -64,7 +62,7 @@ public class DeliveryAddressFragment extends Fragment {
         cancellButton.setOnClickListener(l -> {
 
             clearInputs();
-            ((UserPanelActivity) getActivity()).switchDeliveryAddresForm();
+            ((UserPanelFragment) getParentFragment()).switchDeliveryAddresForm();
         });
     }
 
@@ -98,7 +96,7 @@ public class DeliveryAddressFragment extends Fragment {
                                                Toast.LENGTH_SHORT)
                                         .show();
                                 clearInputs();
-                                ((UserPanelActivity) getActivity()).switchDeliveryAddresForm();
+                                ((UserPanelFragment) getParentFragment()).switchDeliveryAddresForm();
                             }
 
                         });

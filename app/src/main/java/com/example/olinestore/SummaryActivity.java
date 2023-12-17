@@ -1,23 +1,21 @@
 package com.example.olinestore;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.olinestore.Fragments.UserPanelFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,7 +53,7 @@ public class SummaryActivity extends AppCompatActivity {
         confirmPaymentButton = findViewById(R.id.confirmPaymentButton);
 
         goToUserPanelButton.setOnClickListener(v -> {
-            startActivity(new Intent(SummaryActivity.this, UserPanelActivity.class));
+            startActivity(new Intent(SummaryActivity.this, UserPanelFragment.class));
         });
 
         updateUserAddress();

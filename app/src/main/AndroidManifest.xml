@@ -15,7 +15,7 @@
             android:name=".SummaryActivity"
             android:exported="false" />
         <activity
-            android:name=".BagActivity"
+            android:name=".Fragments.BagFragment"
             android:exported="false" />
         <activity
             android:name=".ItemDetailsActivity"
@@ -24,7 +24,7 @@
             android:name=".AllItemsActivity"
             android:exported="false" />
         <activity
-            android:name=".UserPanelActivity"
+            android:name=".Fragments.UserPanelFragment"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
