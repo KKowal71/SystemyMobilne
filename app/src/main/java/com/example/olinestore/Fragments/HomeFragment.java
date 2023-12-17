@@ -51,17 +51,13 @@ public class HomeFragment extends Fragment {
         init(view);
 
 
-        button.setOnClickListener(
-                v -> ((SearchFragment) getParentFragment()).changeFragment()
-        );
         getDataFromFirestore("Shoes");
     }
 
     private void init(@NonNull View view) {
-        button = view.findViewById(R.id.allItemsButton);
         initPopular(view);
         initVisited(view);
-        firestore =FirebaseFirestore.getInstance();
+        firestore = FirebaseFirestore.getInstance();
         popularIl = new ArrayList<>();
         visitedIl = new ArrayList<>();
         il = new ArrayList<>();
@@ -102,7 +98,7 @@ public class HomeFragment extends Fragment {
                         }
                         Random rand = new Random();
                         for (int i = 0; i < popularFragments.length + lastVisitedFragments.length; i++) {
-                            int randomNumber = rand.nextInt(il.size() + 1);
+                            int randomNumber = rand.nextInt(il.size());
 
                             if (i < popularFragments.length) {
                                 popularIl.add(il.get(randomNumber));
@@ -144,7 +140,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void showPopular() {
-        System.out.println(popularIl.size());
         for (int i = 0; i < popularIl.size(); i++) {
             ((ItemFragment)popularFragments[i].getFragment()).setName(popularIl.get(i)[0]);
             StorageReference ref = FirebaseStorage.getInstance().getReference(popularIl.get(i)[1]);
@@ -152,7 +147,6 @@ public class HomeFragment extends Fragment {
         }
     }
     private void showVisited() {
-        System.out.println(visitedIl.size());
         for (int i = 0; i < visitedIl.size(); i++) {
             ((ItemFragment)lastVisitedFragments[i].getFragment()).setName(visitedIl.get(i)[0]);
             StorageReference ref = FirebaseStorage.getInstance().getReference(visitedIl.get(i)[1]);
@@ -166,7 +160,6 @@ public class HomeFragment extends Fragment {
     private FirebaseFirestore firestore;
     private FragmentContainerView[] popularFragments;
     private FragmentContainerView[] lastVisitedFragments;
-    private AllItemsFragment fragment;
-    private Button button;
+
 }
 

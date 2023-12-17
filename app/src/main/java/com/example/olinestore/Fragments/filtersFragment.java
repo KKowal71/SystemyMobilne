@@ -105,9 +105,9 @@ public class filtersFragment extends Fragment {
         categoriesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ((AllItemsFragment) getParentFragment()).category = parent.getItemAtPosition(position).toString();
-//                Toast.makeText(AllItemsActivity.this,  category, Toast.LENGTH_SHORT).show();
-                ((AllItemsFragment) getParentFragment()).getDataFromFirestore();
+//                ((AllItemsFragment) getParentFragment()).category = parent.getItemAtPosition(position).toString();
+////                Toast.makeText(AllItemsActivity.this,  category, Toast.LENGTH_SHORT).show();
+//                ((AllItemsFragment) getParentFragment()).getDataFromFirestore();
             }
 
             @Override

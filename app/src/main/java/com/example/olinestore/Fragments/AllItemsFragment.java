@@ -1,4 +1,5 @@
 package com.example.olinestore.Fragments;
+
 import com.example.olinestore.ListItem;
 import com.example.olinestore.ItemsAdapter;
 
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+
 import com.example.olinestore.R;
 import com.example.olinestore.ItemDetailsActivity;
 
@@ -26,11 +28,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.olinestore.Fragments.SearchFragment;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AllItemsFragment extends Fragment {
@@ -42,7 +49,7 @@ public class AllItemsFragment extends Fragment {
 
     public ArrayAdapter<String> categoriesAdapter;
     private ArrayList<String> categories;
-    public String category = "Shoes";
+//    public String category = "Shoes";
 
     private Map<String, String[]> categoriesSizes;
     public ListView itemsListView;
@@ -55,7 +62,8 @@ public class AllItemsFragment extends Fragment {
     private Button filterButton;
     private FragmentContainerView filtersFragment;
     public Boolean isFilterFragmentShown = false;
-    public MutableLiveData<Boolean>visibilityListener = new MutableLiveData<>();
+    public MutableLiveData<Boolean> visibilityListener =
+            new MutableLiveData<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,50 +79,62 @@ public class AllItemsFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         filtersFragment = view.findViewById(R.id.filtersFragment);
         filterButton = view.findViewById(R.id.filtersButton);
 
 
         visibilityListener.setValue(isFilterFragmentShown);
-        visibilityListener.observe(AllItemsFragment.this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                Toast.makeText(getContext(), String.valueOf(isFilterFragmentShown), Toast.LENGTH_SHORT).show();
-                if(!visibilityListener.getValue()) {
-                    itemsListView.setVisibility(View.VISIBLE);
-                    filterButton.setVisibility(View.VISIBLE);
-                    filtersFragment.setVisibility(View.INVISIBLE);
-                } else{
-                    itemsListView.setVisibility(View.INVISIBLE);
-                    filterButton.setVisibility(View.INVISIBLE);
-                    filtersFragment.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-        filterButton.setOnClickListener(v->{
+        visibilityListener.observe(AllItemsFragment.this,
+                                   new Observer<Boolean>() {
+                                       @Override
+                                       public void onChanged(Boolean aBoolean) {
+                                           Toast.makeText(getContext(),
+                                                          String.valueOf(
+                                                                  isFilterFragmentShown),
+                                                          Toast.LENGTH_SHORT)
+                                                   .show();
+                                           if (!visibilityListener.getValue()) {
+                                               itemsListView.setVisibility(
+                                                       View.VISIBLE);
+                                               filterButton.setVisibility(
+                                                       View.VISIBLE);
+                                               filtersFragment.setVisibility(
+                                                       View.INVISIBLE);
+                                           } else {
+                                               itemsListView.setVisibility(
+                                                       View.INVISIBLE);
+                                               filterButton.setVisibility(
+                                                       View.INVISIBLE);
+                                               filtersFragment.setVisibility(
+                                                       View.VISIBLE);
+                                           }
+                                       }
+                                   });
+        filterButton.setOnClickListener(v -> {
             isFilterFragmentShown = true;
             visibilityListener.setValue(isFilterFragmentShown);
         });
         firestore = FirebaseFirestore.getInstance();
         categories = new ArrayList<>();
         categoriesSizes = new HashMap<>();
-        getCategoriesFromStorage();
-
+        getAllItemsAndCategoriesFromStorage();
 
 
         itemsListView = view.findViewById(R.id.itemsListView);
         nextPageButton = view.findViewById(R.id.nextPageButton);
         previousPageButton = view.findViewById(R.id.previusPageButton);
-        searchItemEditText = ((SearchFragment)getParentFragment()).getSearchText();
+        searchItemEditText =
+                ((SearchFragment) getParentFragment()).getSearchText();
 
         totalAmountTextView = view.findViewById(R.id.pageNumberTextView);
         itemList = new ArrayList<>();
         filteredItemList = new ArrayList<>();
 
         displayedItemList = new ArrayList<>();
-        getDataFromFirestore();
+//        getDataFromFirestore();
         itemsAdapter = new ItemsAdapter(getContext(), displayedItemList);
         itemsListView.setAdapter(itemsAdapter);
 
@@ -139,21 +159,26 @@ public class AllItemsFragment extends Fragment {
 
         searchItemEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
 
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
                 filteredItemList.clear();
-                if(s.length() > 0){
-                    for(ListItem item:itemList){
-                        if(item.getName().toLowerCase().contains(s.toString().toLowerCase())){
+                if (s.length() > 0) {
+                    for (ListItem item : itemList) {
+                        if (item.getName().toLowerCase()
+                                .contains(s.toString().toLowerCase())) {
+                            filteredItemList.add(item);
+                        } else if (item.getBrand().toLowerCase()
+                                .contains(s.toString().toLowerCase())) {
                             filteredItemList.add(item);
                         }
                     }
-                }
-                else {
+                } else {
                     filteredItemList.addAll(itemList);
                     System.out.println(itemList.get(0).getName());
                 }
@@ -166,10 +191,15 @@ public class AllItemsFragment extends Fragment {
 
             }
         });
-    };
+    }
+
+    ;
+
     private void showSpecifiedNumberOfItems() {
         displayedItemList.clear();
-        for (int i = pageNumber * numberOfItems; i < (pageNumber + 1) * numberOfItems && i < filteredItemList.size(); i++) {
+        for (int i = pageNumber * numberOfItems;
+             i < (pageNumber + 1) * numberOfItems &&
+                     i < filteredItemList.size(); i++) {
             displayedItemList.add(filteredItemList.get(i));
         }
         itemsAdapter.notifyDataSetChanged();
@@ -184,51 +214,89 @@ public class AllItemsFragment extends Fragment {
         }
     }
 
-    public void getDataFromFirestore() {
-        itemList.clear();
-        firestore.collection(category)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            try {
-                                String name = (String) document.getData().get("name");
-                                String brand = (String) document.getData().get("brand");
-                                String colors = (String) document.getData().get("colors");
-                                float price = Float.parseFloat((String) document.getData().get("price"));
-                                String currency = (String) document.getData().get("currency");
-                                String path = (String) document.getData().get("img");
-                                ListItem item = new ListItem(name, brand, colors, price, currency, path, categoriesSizes.get(category));
-                                itemList.add(item);
-                            } catch (NumberFormatException e) {
-                            }
-                        }
-                        pageNumber = 0;
-                        filteredItemList.addAll(itemList);
-                        showSpecifiedNumberOfItems();
-                        itemsAdapter.notifyDataSetChanged();
-                    }
-                });
+//    public void getDataFromFirestore() {
+//        itemList.clear();
+//        firestore.collection(category)
+//                .get()
+//                .addOnCompleteListener(task -> {
+//                    if (task.isSuccessful()) {
+//                        for (QueryDocumentSnapshot document : task.getResult()) {
+//                            addItemFromDocument(document);
+//                        }
+//                        pageNumber = 0;
+//                        filteredItemList.addAll(itemList);
+//                        showSpecifiedNumberOfItems();
+//                        itemsAdapter.notifyDataSetChanged();
+//                    }
+//                });
+//    }
+
+    private void addItemFromDocument(QueryDocumentSnapshot document, String category) {
+        String name = (String) document.getString("name");
+        String brand = (String) document.getString("brand");
+        if (brand == null) {
+            System.out.println("AHA");
+
+        }
+        System.out.println(name);
+        System.out.println(brand);
+        String colors = (String) document.getString("colors");
+        float price = Float.parseFloat(document.getString("price"));
+        String currency = (String) document.getString("currency");
+        String path = document.getString("img");
+        ListItem item = new ListItem(name, brand, colors, price, currency, path,
+                                     category, categoriesSizes.get(category));
+        itemList.add(item);
     }
 
-    public void getCategoriesFromStorage() {
+    public void getAllItemsAndCategoriesFromStorage() {
         firestore.collection("categories").get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     try {
-                        String categoryName = (String) document.getData().get("name");
-                        String sizes = "size," + document.getData().get("sizes");
+                        String categoryName =
+                                (String) document.getData().get("name");
+                        String sizes =
+                                "size," + document.getData().get("sizes");
                         categories.add(categoryName);
                         categoriesSizes.put(categoryName, sizes.split(","));
                     } catch (NumberFormatException e) {
                         System.out.println(e);
                     }
                 }
-                categoriesAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categories
-                );
-                categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                getAllItemsFromStorage();
+                categoriesAdapter = new ArrayAdapter<>(getContext(),
+                                                       android.R.layout.simple_spinner_item,
+                                                       categories);
+                categoriesAdapter.setDropDownViewResource(
+                        android.R.layout.simple_spinner_dropdown_item);
             }
         });
+    }
+
+    public void getAllItemsFromStorage() {
+        ArrayList<Task<QuerySnapshot>> tasks = new ArrayList<>();
+        for (String cat : categories) {
+            Task<QuerySnapshot> getCategory = firestore.collection(cat).get();
+            tasks.add(getCategory);
+
+            getCategory.addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        addItemFromDocument(document, cat);
+                    }
+                }
+            });
+        }
+
+        Tasks.whenAll(tasks).addOnCompleteListener(task -> {
+            pageNumber = 0;
+            filteredItemList.addAll(itemList);
+            showSpecifiedNumberOfItems();
+            itemsAdapter.notifyDataSetChanged();
+        });
+
+
     }
 
     public ArrayList<ListItem> getItemList() {

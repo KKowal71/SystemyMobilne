@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
             SearchFragment possibleFragment =
                     (SearchFragment) fm.findFragmentById(
                             R.id.ShownFragment);
+            possibleFragment.setHomeFragment();
         } catch (ClassCastException e) {
             SearchFragment fragment = new SearchFragment();
             FragmentTransaction transaction = fm.beginTransaction();
@@ -95,8 +96,6 @@ public class MainActivity extends AppCompatActivity {
             transaction.commitNow();
         }
     }
-
-
 
     private FirebaseAuth firebaseAuth;
 

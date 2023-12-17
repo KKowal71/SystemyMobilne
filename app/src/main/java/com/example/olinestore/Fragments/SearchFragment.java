@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,9 @@ import com.example.olinestore.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class SearchFragment extends Fragment {
@@ -48,6 +53,35 @@ public class SearchFragment extends Fragment {
                 setupHiTextForUser(firebaseAuth.getUid());
             } else {
                 welcomeTextView.setText("eShopXpress");
+            }
+        });
+
+        searchText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i,
+                                          int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1,
+                                      int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                try {
+                    HomeFragment possibleFragment =
+                            (HomeFragment) fm.findFragmentById(
+                                    R.id.SearchFragmentContainer);
+
+                    AllItemsFragment fragment = new AllItemsFragment();
+                    FragmentTransaction transaction = fm.beginTransaction();
+                    transaction.replace(R.id.SearchFragmentContainer, fragment);
+                    transaction.commitNow();
+                } catch (ClassCastException e) {
+                }
             }
         });
     }
@@ -83,6 +117,25 @@ public class SearchFragment extends Fragment {
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.SearchFragmentContainer, fragment);
             transaction.commitNow();
+        }
+    }
+
+
+
+    public void setHomeFragment() {
+        try {
+
+            AllItemsFragment possibleFragment =
+                    (AllItemsFragment) fm.findFragmentById(
+                            R.id.SearchFragmentContainer);
+            searchText.setText("");
+            HomeFragment fragment = new HomeFragment();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.SearchFragmentContainer, fragment);
+            transaction.commitNow();
+
+        } catch (ClassCastException e) {
+
         }
     }
 

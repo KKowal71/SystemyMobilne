@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class ListItem implements Serializable {
     private String brand;
-    private String categories;
+    private String category;
     private String colors;
     private String name;
     private String currency;
@@ -48,7 +48,7 @@ public class ListItem implements Serializable {
     }
 
     public String getCategories() {
-        return categories;
+        return category;
     }
 
     public String getColors() {
@@ -67,7 +67,10 @@ public class ListItem implements Serializable {
         return price;
     }
 
-    public ListItem(String name, String brand, String colors, float price, String currency, String imagePath, String[] sizes) {
+    public ListItem(String name, String brand, String colors, float price,
+                    String currency, String imagePath, String category,
+                    String[] sizes) {
+
         this.name = name;
         this.brand = brand;
         this.colors = colors;
@@ -75,10 +78,11 @@ public class ListItem implements Serializable {
         this.price = price;
         if (!imagePath.isEmpty()) {
             this.imagePath = "images/" + imagePath;
-        } else{
+        } else {
             this.imagePath = "images/buty.png";
         }
         this.sizes = sizes;
         this.amount = 1;
+        this.category = category;
     }
 }
