@@ -1,5 +1,8 @@
 package com.example.olinestore.Fragments;
 
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -42,16 +45,13 @@ public class SettingsFragment extends Fragment {
         langSpinner = view.findViewById(R.id.LanguageSpinner);
         textSize = view.findViewById(R.id.TextSize);
         accMode = view.findViewById(R.id.AccessibilityMode);
+
         String[] langs = {"English", "Polish", "Espanol"};
         ArrayAdapter<CharSequence> langSpinnerAdapt = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, langs);
         langSpinner.setAdapter(langSpinnerAdapt);
-        textSize.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                textSize.setText("Shrink text");
-            } else {
-                textSize.setText("Enlarge text");
-            }
-        });
+        textSize.setOnCheckedChangeListener(sizeListener);
+
+        textSize.setChecked(wasSizeChecked);
 
         accMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -62,8 +62,43 @@ public class SettingsFragment extends Fragment {
         });
     }
 
-    private Switch textSize;
+
+    private void updateThemeConfiguration(float newTextScaleX) {
+        Configuration configuration = getResources().getConfiguration();
+        configuration.fontScale = newTextScaleX; // set textScaleX to fontScale
+
+        getActivity().getTheme().applyStyle(R.style.NormalTheme, true);
+
+        // Apply the updated configuration to the resources
+        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+
+    }
+
+
+    private class SizeListener implements CompoundButton.OnCheckedChangeListener {
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton,
+        boolean isChecked) {
+
+            float newTextScale = 1.0f;
+            if (isChecked) {
+                newTextScale = 1.4f;
+                textSize.setText("Shrink text");
+                wasSizeChecked = true;
+            } else {
+                textSize.setText("Enlarge text");
+                wasSizeChecked = false;
+            }
+            updateThemeConfiguration(newTextScale);
+        }
+    }
+    private SizeListener sizeListener = new SizeListener();
+
+    private Switch textSize ;
 
     private Switch accMode;
     private Spinner langSpinner;
+
+    private Resources.Theme theme;
+    private static boolean wasSizeChecked = false;
 }
