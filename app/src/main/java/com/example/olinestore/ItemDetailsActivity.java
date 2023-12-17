@@ -84,8 +84,14 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
         addToBagButton = findViewById(R.id.addToBagButton);
         addToBagButton.setOnClickListener(v -> {
-            bag.addToBag(item);
-            onBackPressed();
+            if (item.getSize() == null) {
+                Toast.makeText(ItemDetailsActivity.this, "CHOOSE SIZE FIRST",
+                               +Toast.LENGTH_SHORT).show();
+            } else {
+                bag.addToBag(item);
+                onBackPressed();
+            }
+
         });
         sizeSpinner = findViewById(R.id.sizeSpinner);
         ArrayAdapter<CharSequence> sizeSpinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, item.getSizes());
