@@ -92,7 +92,7 @@ public class SummaryActivity extends AppCompatActivity {
 
                                 DocumentSnapshot document = task.getResult();
                                 if (document.exists()) {
-                                    float userBalance = document.getDouble("balance").floatValue();
+                                    float userBalance = Float.parseFloat(document.getString("balance"));
                                     userInfoTV.setText(document.getString("name") + " " + document.getString("surname"));
                                     itemsCountTV.setText("Number of item: " + itemsCount);
                                     DecimalFormat decimalFormat = new DecimalFormat("####.##");
