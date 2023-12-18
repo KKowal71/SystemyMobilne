@@ -46,7 +46,7 @@ public class AllItemsFragment extends Fragment {
     private ArrayList<String> categories;
     public String category = "";
     private Integer minPrice = 1;
-    private Integer maxPrice = 1;
+    private Integer maxPrice = 2500;
 
     private Map<String, String[]> categoriesSizes;
     public ListView itemsListView;
@@ -197,7 +197,7 @@ public class AllItemsFragment extends Fragment {
             boolean condition2 = item.getName().toLowerCase()
                     .contains(s.toLowerCase()) || item.getBrand().toLowerCase()
                     .contains(s.toLowerCase());
-            boolean condition3 = (minPrice.floatValue() == 1 && maxPrice.floatValue() == 1.0) || minPrice.floatValue() <= item.getPrice() && item.getPrice() <= maxPrice.floatValue() ;
+            boolean condition3 = (minPrice.floatValue() == 1.0 && maxPrice.floatValue() == 1.0) || minPrice.floatValue() <= item.getPrice() && item.getPrice() <= maxPrice.floatValue() ;
             if (condition1 && condition2 && condition3) {
                 filteredItemList.add(item);
             }

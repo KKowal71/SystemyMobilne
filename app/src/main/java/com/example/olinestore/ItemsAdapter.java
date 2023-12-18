@@ -111,16 +111,13 @@ public class ItemsAdapter extends BaseAdapter {
         });
         StorageReference imageRef = FirebaseStorage.getInstance().getReference(dataList.get(position).getImagePath());
         Task<byte[]> image = imageRef.getBytes(1024 * 1024 * 5);
-        image.addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] byteArray) {
-                // Convert byte array to Bitmap
-                if (byteArray == null || byteArray.length == 0) {
+        image.addOnSuccessListener(byteArray -> {
+            // Convert byte array to Bitmap
+            if (byteArray == null || byteArray.length == 0) {
 
-                }
-                Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-                itemImageView.setImageBitmap(bitmap);
             }
+            Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            itemImageView.setImageBitmap(bitmap);
         });
         if(isBagView) {
             sizeTextView.setVisibility(sizeTextView.VISIBLE);

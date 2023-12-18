@@ -125,10 +125,10 @@ public class SummaryActivity extends AppCompatActivity {
 
                                 DocumentSnapshot document = task.getResult();
                                 if (document.exists()) {
-                                    Double userBalance =
-                                            document.getDouble("balance");
+                                    String userBalance =
+                                            document.getString("balance");
                                     if (userBalance != null) {
-                                        Double newBalance = userBalance;
+                                        Double newBalance = Double.parseDouble(userBalance);
                                         newBalance -= totalAmount;
                                         setUserBalance(Uid, newBalance);
                                     }

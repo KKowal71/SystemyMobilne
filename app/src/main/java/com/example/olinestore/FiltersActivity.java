@@ -41,6 +41,9 @@ public class FiltersActivity extends AppCompatActivity {
         categoriesSpinner = findViewById(R.id.categorySinner);
         colorSpinner = findViewById(R.id.colorSpinner);
 
+        maxPrizeTextView.setText(String.valueOf(AllItemsFragment.maxPriceListener.getValue()));
+        minPrizeTextView.setText(String.valueOf(AllItemsFragment.minPriceListener.getValue()));
+
         itemsOnPageNumber.setText(String.valueOf(numberOfItems));
 
         ArrayAdapter<String> categoriesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
@@ -85,7 +88,7 @@ public class FiltersActivity extends AppCompatActivity {
 
         minPriceSeekBar.setMin(1);
         minPriceSeekBar.setMax(2500);
-        minPriceSeekBar.setProgress(10);
+        minPriceSeekBar.setProgress(AllItemsFragment.minPriceListener.getValue());
         minPriceSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -106,12 +109,11 @@ public class FiltersActivity extends AppCompatActivity {
 
         maxPriceSeekBar.setMin(1);
         maxPriceSeekBar.setMax(2500);
-        maxPriceSeekBar.setProgress(10);
+        maxPriceSeekBar.setProgress(AllItemsFragment.maxPriceListener.getValue());
         maxPriceSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 maxPrizeTextView.setText(String.valueOf(progress));
-
             }
 
             @Override
