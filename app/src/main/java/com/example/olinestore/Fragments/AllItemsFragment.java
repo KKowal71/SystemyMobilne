@@ -42,7 +42,6 @@ public class AllItemsFragment extends Fragment {
     private ArrayList<ListItem> displayedItemList;
     ItemsAdapter itemsAdapter;
 
-//    public ArrayAdapter<String> categoriesAdapter;
     private ArrayList<String> categories;
     public String category = "";
     private Integer minPrice = 1;
@@ -103,7 +102,7 @@ public class AllItemsFragment extends Fragment {
         filteredItemList = new ArrayList<>();
 
         displayedItemList = new ArrayList<>();
-//        getDataFromFirestore();
+
         itemsAdapter = new ItemsAdapter(getContext(), displayedItemList);
         itemsListView.setAdapter(itemsAdapter);
 
@@ -126,8 +125,7 @@ public class AllItemsFragment extends Fragment {
         });
 
         itemsListView.setOnItemClickListener((parent, view2, position, id) -> {
-            // Handle item click
-            ;
+
             String chosenItem = displayedItemList.get(position).getName();
             Toast.makeText(getContext(), chosenItem, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getContext(), ItemDetailsActivity.class);
@@ -145,7 +143,6 @@ public class AllItemsFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
-//                filteredItemList.clear();
                 if (s.length() > 0) {
                     applyFilters(s.toString());
                 }
@@ -191,6 +188,7 @@ public class AllItemsFragment extends Fragment {
 
     ;
     private void applyFilters(String s){
+        pageNumber = 0;
         filteredItemList.clear();
         for (ListItem item : itemList) {
             boolean condition1 = category.isEmpty() || category.equals("-") || item.getCategories().equals(category);
@@ -217,42 +215,27 @@ public class AllItemsFragment extends Fragment {
     }
 
     private void handleDisplayedItem(String mode) {
-        if (mode.equals("next") && pageNumber < filteredItemList.size() / 10) {
+        if (mode.equals("next") && pageNumber < filteredItemList.size() / numberOfItems) {
             pageNumber += 1;
         } else if (mode.equals("previous") && pageNumber > 0) {
             pageNumber -= 1;
         }
     }
 
-//    public void getDataFromFirestore() {
-//        itemList.clear();
-//        firestore.collection(category)
-//                .get()
-//                .addOnCompleteListener(task -> {
-//                    if (task.isSuccessful()) {
-//                        for (QueryDocumentSnapshot document : task.getResult()) {
-//                            addItemFromDocument(document);
-//                        }
-//                        pageNumber = 0;
-//                        filteredItemList.addAll(itemList);
-//                        showSpecifiedNumberOfItems();
-//                        itemsAdapter.notifyDataSetChanged();
-//                    }
-//                });
-//    }
+
 
     private void addItemFromDocument(QueryDocumentSnapshot document, String category) {
-        String name = (String) document.getString("name");
-        String brand = (String) document.getString("brand");
+        String name = document.getString("name");
+        String brand = document.getString("brand");
         if (brand == null) {
             System.out.println("AHA");
 
         }
         System.out.println(name);
         System.out.println(brand);
-        String colors = (String) document.getString("colors");
+        String colors = document.getString("colors");
         float price = Float.parseFloat(document.getString("price"));
-        String currency = (String) document.getString("currency");
+        String currency = document.getString("currency");
         String path = document.getString("img");
         ListItem item = new ListItem(name, brand, colors, price, currency, path,
                 category, categoriesSizes.get(category));
@@ -275,11 +258,6 @@ public class AllItemsFragment extends Fragment {
                     }
                 }
                 getAllItemsFromStorage();
-//                categoriesAdapter = new ArrayAdapter<>(getContext(),
-//                                                       android.R.layout.simple_spinner_item,
-//                                                       categories);
-//                categoriesAdapter.setDropDownViewResource(
-//                        android.R.layout.simple_spinner_dropdown_item);
             }
         });
     }
