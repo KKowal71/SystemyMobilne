@@ -94,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.ShownFragment, fragment);
             transaction.commitNow();
+        } catch (Exception e) {
+
         }
     }
 

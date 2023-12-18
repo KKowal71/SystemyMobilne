@@ -69,6 +69,8 @@ public class SearchFragment extends Fragment {
                     transaction.replace(R.id.SearchFragmentContainer, fragment, "ALL_ITEMS_FRAGMENT");
                     transaction.commitNow();
                 } catch (ClassCastException e) {
+                } catch (Exception e) {
+
                 }
                 return false;
             }
@@ -107,6 +109,8 @@ public class SearchFragment extends Fragment {
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.SearchFragmentContainer, fragment);
             transaction.commitNow();
+        } catch (Exception e) {
+
         }
     }
 
@@ -128,6 +132,8 @@ public class SearchFragment extends Fragment {
             transaction.commitNow();
 
         } catch (ClassCastException e) {
+
+        } catch (Exception e) {
 
         }
     }

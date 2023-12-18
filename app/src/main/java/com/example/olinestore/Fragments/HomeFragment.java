@@ -88,22 +88,24 @@ public class HomeFragment extends Fragment {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             try {
-                                String name = (String) document.getData().get("name");
-                                String path = (String) document.getData().get("img");
+                                String name =
+                                        (String) document.getData().get("name");
+                                String path =
+                                        (String) document.getData().get("img");
                                 path = "images/" + path;
-                                String[] tab ={name, path};
+                                String[] tab = {name, path};
                                 il.add(tab);
                             } catch (NumberFormatException e) {
                             }
                         }
                         Random rand = new Random();
-                        for (int i = 0; i < popularFragments.length + lastVisitedFragments.length; i++) {
+                        for (int i = 0; i < popularFragments.length +
+                                lastVisitedFragments.length; i++) {
                             int randomNumber = rand.nextInt(il.size());
 
                             if (i < popularFragments.length) {
                                 popularIl.add(il.get(randomNumber));
-                            }
-                            else {
+                            } else {
                                 visitedIl.add(il.get(randomNumber));
                             }
                         }
@@ -120,7 +122,8 @@ public class HomeFragment extends Fragment {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     try {
-                        String categoryName = (String) document.getData().get("name");
+                        String categoryName =
+                                (String) document.getData().get("name");
                         if (!categoryName.isEmpty()) {
                             getDataFromFirestore(categoryName);
                         }
@@ -140,20 +143,36 @@ public class HomeFragment extends Fragment {
     }
 
     private void showPopular() {
-        for (int i = 0; i < popularIl.size(); i++) {
-            ((ItemFragment)popularFragments[i].getFragment()).setName(popularIl.get(i)[0]);
-            StorageReference ref = FirebaseStorage.getInstance().getReference(popularIl.get(i)[1]);
-            ((ItemFragment)popularFragments[i].getFragment()).setImg(ref);
+        try {
+            for (int i = 0; i < popularIl.size(); i++) {
+                ((ItemFragment) popularFragments[i].getFragment()).setName(
+                        popularIl.get(i)[0]);
+                StorageReference ref = FirebaseStorage.getInstance()
+                        .getReference(popularIl.get(i)[1]);
+                ((ItemFragment) popularFragments[i].getFragment()).setImg(ref);
+            }
+        } catch (Exception e) {
+
         }
     }
+
     private void showVisited() {
-        for (int i = 0; i < visitedIl.size(); i++) {
-            ((ItemFragment)lastVisitedFragments[i].getFragment()).setName(visitedIl.get(i)[0]);
-            StorageReference ref = FirebaseStorage.getInstance().getReference(visitedIl.get(i)[1]);
-            ((ItemFragment)lastVisitedFragments[i].getFragment()).setImg(ref);
+        try {
+            for (int i = 0; i < visitedIl.size(); i++) {
+                ((ItemFragment) lastVisitedFragments[i].getFragment()).setName(
+                        visitedIl.get(i)[0]);
+                StorageReference ref = FirebaseStorage.getInstance()
+                        .getReference(visitedIl.get(i)[1]);
+                ((ItemFragment) lastVisitedFragments[i].getFragment()).setImg(
+                        ref);
+            }
+        } catch (Exception e) {
+
         }
 
+
     }
+
     ArrayList<String[]> popularIl;
     ArrayList<String[]> visitedIl;
     ArrayList<String[]> il;
