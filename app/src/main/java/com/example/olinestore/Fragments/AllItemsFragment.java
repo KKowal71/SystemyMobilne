@@ -129,7 +129,7 @@ public class AllItemsFragment extends Fragment {
             String chosenItem = displayedItemList.get(position).getName();
             Toast.makeText(getContext(), chosenItem, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getContext(), ItemDetailsActivity.class);
-            intent.putExtra("item", itemList.get(position));
+            intent.putExtra("item", displayedItemList.get(position));
             startActivity(intent);
         });
 
