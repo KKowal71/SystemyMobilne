@@ -7,9 +7,7 @@ import com.example.olinestore.ItemsAdapter;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
 import com.example.olinestore.R;
 import com.example.olinestore.ItemDetailsActivity;
@@ -21,14 +19,12 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.olinestore.Fragments.SearchFragment;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,9 +32,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class AllItemsFragment extends Fragment {
@@ -50,7 +44,9 @@ public class AllItemsFragment extends Fragment {
 
 //    public ArrayAdapter<String> categoriesAdapter;
     private ArrayList<String> categories;
-    public String category;
+    public String category = "";
+    private Integer minPrice = 1;
+    private Integer maxPrice = 1;
 
     private Map<String, String[]> categoriesSizes;
     public ListView itemsListView;
@@ -65,6 +61,10 @@ public class AllItemsFragment extends Fragment {
     public static MutableLiveData<Integer> itemsOnPageListener =
             new MutableLiveData<>();
     public static MutableLiveData<String> categoryListener =
+            new MutableLiveData<>();
+    public static MutableLiveData<Integer> minPriceListener =
+            new MutableLiveData<>();
+    public static MutableLiveData<Integer> maxPriceListener =
             new MutableLiveData<>();
 
     @Override
@@ -160,30 +160,32 @@ public class AllItemsFragment extends Fragment {
 
         itemsOnPageListener.setValue(numberOfItems);
         itemsOnPageListener.observe(AllItemsFragment.this,
-                new Observer<Integer>() {
-                    @Override
-                    public void onChanged(Integer aInteger) {
-                        numberOfItems = itemsOnPageListener.getValue();
-                        showSpecifiedNumberOfItems();
-                    }
+                aInteger -> {
+                    numberOfItems = itemsOnPageListener.getValue();
+                    showSpecifiedNumberOfItems();
                 });
 
         categoryListener.setValue(category);
         categoryListener.observe(AllItemsFragment.this,
-                new Observer<String>() {
-                    @Override
-                    public void onChanged(String aString) {
-                        category = categoryListener.getValue();
-//                        filteredItemList.clear();
-//                        for (ListItem item : itemList) {
-//                            if (item.getCategories().equals(category)) {
-//                                filteredItemList.add(item);
-//                            }
-//                        }
-//                        showSpecifiedNumberOfItems();
-                        System.out.println("change");
-                        applyFilters(searchItemEditText.getEditableText().toString());
-                    }
+                aString -> {
+                    category = categoryListener.getValue();
+
+                    System.out.println("change");
+                    applyFilters(searchItemEditText.getEditableText().toString());
+                });
+
+        minPriceListener.setValue(minPrice);
+        minPriceListener.observe(AllItemsFragment.this,
+                aInteger -> {
+                    minPrice = minPriceListener.getValue();
+                    applyFilters(searchItemEditText.getEditableText().toString());
+                });
+
+        maxPriceListener.setValue(maxPrice);
+        maxPriceListener.observe(AllItemsFragment.this,
+                aInteger -> {
+                    maxPrice = maxPriceListener.getValue();
+                    applyFilters(searchItemEditText.getEditableText().toString());
                 });
     }
 
@@ -195,7 +197,8 @@ public class AllItemsFragment extends Fragment {
             boolean condition2 = item.getName().toLowerCase()
                     .contains(s.toLowerCase()) || item.getBrand().toLowerCase()
                     .contains(s.toLowerCase());
-            if (condition1 && condition2) {
+            boolean condition3 = (minPrice.floatValue() == 1 && maxPrice.floatValue() == 1.0) || minPrice.floatValue() <= item.getPrice() && item.getPrice() <= maxPrice.floatValue() ;
+            if (condition1 && condition2 && condition3) {
                 filteredItemList.add(item);
             }
         }
@@ -210,7 +213,7 @@ public class AllItemsFragment extends Fragment {
             displayedItemList.add(filteredItemList.get(i));
         }
         itemsAdapter.notifyDataSetChanged();
-        totalAmountTextView.setText("Page " + (pageNumber + 1) + "\n(" + numberOfItems + " items on page)");
+        totalAmountTextView.setText("Page " + (pageNumber + 1) + "\n(max. " + numberOfItems + " items on page)");
     }
 
     private void handleDisplayedItem(String mode) {
